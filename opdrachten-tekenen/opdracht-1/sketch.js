@@ -6,5 +6,7 @@ function setup() {
 function draw() {
   background(220);
   fill(60);
-  circle(width / 2, height / 2, max(width, height));
+for (let i = 0; i < 10; i++) {
+  circle(20 + i * 40, 100, 30);
+}
 }
