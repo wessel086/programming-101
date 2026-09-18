@@ -1,19 +1,22 @@
-let x = 10; // x = aantal cirkels//
+let cirkelsPerRij = 10;
 
 function setup() {
-  createCanvas(400, 60);
+  createCanvas(300, 300);
   noStroke();
 }
 
 function draw() {
   background(220);
 
-  let diameter = width / x;
+  let diameter = width / cirkelsPerRij;
 
-  for (let i = 0; i < x; i += 1) {
-    let x = diameter / 2 + i * diameter;
+  for (let rij = 0; rij < cirkelsPerRij; rij += 1) {
+    for (let kolom = 0; kolom < cirkelsPerRij; kolom += 1) {
+      let x = diameter / 2 + kolom * diameter;
+      let y = diameter / 2 + rij * diameter;
 
-    fill(70);
-    circle(x, height / 2, diameter);
+      fill(60);
+      circle(x, y, diameter);
+    }
   }
 }
