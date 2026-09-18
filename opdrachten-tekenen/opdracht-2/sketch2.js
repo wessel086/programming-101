@@ -1,18 +1,24 @@
 function setup() {
-  createCanvas(400, 80);
+  createCanvas(300, 300);
   noStroke();
 }
 
 function draw() {
   background(220);
 
-  let count = 24;
-  let diameter = width / count;
+  let aantal = 12;
+  let grootte = width / aantal;
 
-  for (let i = 0; i < count; i++) {
-    let redValue = map(i, 0, count - 1, 0, 255); //map(value, fromMin, fromMax, toMin, toMax)//
-    //i zit in de loop, dus i + 1 tot i=24-1 (23) 23 is de max in de loop, 255 is de max kleurcode. een map() is dus iets anders dan een for loop.//
-    fill(redValue, 0, 0);
-    circle(diameter / 2 + i * diameter, height / 2, diameter);
+  for (let rij = 0; rij < aantal; rij++) {
+    for (let kolom = 0; kolom < aantal; kolom++) {
+      let rood = map(kolom, 0, aantal - 1, 0, 255);
+
+      fill(rood, 0, 0);
+
+      let x = grootte / 2 + kolom * grootte;
+      let y = grootte / 2 + rij * grootte;
+
+      circle(x, y, grootte);
+    }
   }
 }
