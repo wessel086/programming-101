@@ -6,19 +6,23 @@ function setup() {
 function draw() {
   background(220);
 
-  let aantal = 12;
-  let grootte = width / aantal;
+  let count = 12;
+  let diameter = width / count;
 
-  for (let rij = 0; rij < aantal; rij++) {
-    for (let kolom = 0; kolom < aantal; kolom++) {
-      let rood = map(kolom, 0, aantal - 1, 0, 255);
+  for (let row = 0; row < count; row++) {
+    for (let col = 0; col < count; col++) {
+      let value = map(col, 0, count - 1, 0, 255);
 
-      fill(rood, 0, 0);
+      if (row < 4) {
+        fill(value, 0, 0);
+      } else if (row < 8) {
+        fill(0, value, 0);
+      } else {
+        fill(0, 0, value);
+      }
 
-      let x = grootte / 2 + kolom * grootte;
-      let y = grootte / 2 + rij * grootte;
-
-      circle(x, y, grootte);
+      circle(diameter / 2 + col * diameter, diameter / 2 + row * diameter, diameter);
     }
   }
 }
+//deze was pittig, maar na veel hulp en tweaks, eindelijk hem kunnen toveren//
