@@ -13,16 +13,20 @@ function draw() {
     for (let col = 0; col < count; col++) {
       let value = map(col, 0, count - 1, 0, 255);
 
-      if (row < 4) {
-        fill(value, 0, 0);
-      } else if (row < 8) {
-        fill(0, value, 0);
-      } else {
-        fill(0, 0, value);
-      }
+let perBlock = count / 3;
+
+if (row < perBlock) {
+  fill(value, 0, 0);
+} else if (row < perBlock * 2) {
+  fill(0, value, 0);
+} else {
+  fill(0, 0, value);
+}
 
       circle(diameter / 2 + col * diameter, diameter / 2 + row * diameter, diameter);
     }
   }
-}
+}let perBlock = count / 3;
+
+
 //deze was pittig, maar na veel hulp en tweaks, eindelijk hem kunnen toveren//
