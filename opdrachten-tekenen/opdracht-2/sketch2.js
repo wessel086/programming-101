@@ -13,4 +13,5 @@ function draw() {
   stroke(20)
   line(100,50,200,100);
   triangle(20,20,0,40,60,60);
+  rect(170, 30, 100, 60, 14);  // ronde hoeken
 }
