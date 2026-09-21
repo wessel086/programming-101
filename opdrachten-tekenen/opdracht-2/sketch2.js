@@ -1,15 +1,14 @@
 function setup() {
   createCanvas(300, 200);
-  stroke(250, 0, 0);
+  stroke(40);
 }
 
 function draw() {
   background(220);
-
-  let count = 15;
-
-  for (let i = 0; i < count; i++) {
-    let y = 10 + i * ((height - 20) / (count - 1));
-    line(10, y, width - 10, y);
-  }
+  fill(255, 0, 0);
+  line (10, 10, 290, 190);
+  line (10, 20, 290, 180);
+  line (10, 30, 290, 170);
+  line (10, 10 + 10, etc);
+  line (10, (10 + (i * 10)), 290, (190 - (i * 10))
 }
