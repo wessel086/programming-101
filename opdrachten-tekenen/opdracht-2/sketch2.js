@@ -1,17 +1,20 @@
+const circlePositionsX = [];const circlePositionsY = [];
+const circleAmount = 50;
 function setup() {
-  createCanvas(300, 300);
-  noStroke();
-}
+    createCanvas(500, 500);
 
+    background(100);
+
+    fill(100, 255, 0);
+
+    for (let i = 0; i < circleAmount; i++) {
+        circlePositionsX[i] = random(width);
+        circlePositionsY[i] = random(height);
+    }
+}
 function draw() {
-  background(220);
-  fill(255, 120, 90);
-  rect(80, 100, 50, 50);
-  circle(200, 100, 40);
-  ellipse(200, 200, 50, 30);
-  strokeWeight(2);
-  stroke(20)
-  line(100,50,200,100);
-  triangle(20,20,0,40,60,60);
-  rect(170, 30, 100, 60, 14);  // ronde hoeken
+    for (let i = 0; i < circleAmount; i++)
+        circle(circlePositionsX[i],
+            circlePositionsY[i],
+            80);
 }
