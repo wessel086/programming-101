@@ -1,20 +1,18 @@
-const circlePositionsX = [];const circlePositionsY = [];
-const circleAmount = 50;
 function setup() {
-    createCanvas(500, 500);
-
-    background(100);
-
-    fill(100, 255, 0);
-
-    for (let i = 0; i < circleAmount; i++) {
-        circlePositionsX[i] = random(width);
-        circlePositionsY[i] = random(height);
-    }
+  createCanvas(300, 200);
+  stroke(40);
 }
+
 function draw() {
-    for (let i = 0; i < circleAmount; i++)
-        circle(circlePositionsX[i],
-            circlePositionsY[i],
-            80);
+  background(220);
+
+let count = 15;
+  for(let i = 0; i < count; i++);
+
+    let heighty = 200;
+    let y = 5;
+    for (let y = 5; y < heighty; y++) {
+    fill (0, 0, 0);
+    line(0, heighty + y, 250, y); 
+    }
 }
