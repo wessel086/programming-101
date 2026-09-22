@@ -1,17 +1,22 @@
 function setup() {
-  createCanvas(240, 240);
-  stroke(80, 140, 255);
+  createCanvas(400, 60);
+  noStroke();
+  fill(60);
 }
 
 function draw() {
-  background(250);
+  background(220);
 
-  let count = 20;
+  let count = 10;
+  let cellSize = width / count;
 
   for (let i = 0; i < count; i++) {
-    let x = map(i, 0, count - 1, 0, width);
-    let y = map(i, 0, count - 1, height, 0);
+    let x = i * cellSize;
 
-    line(x, 0, 0, y);
+    if (i % 2 === 0) {
+      square(x, height / 2 - cellSize / 2, cellSize);
+    } else {
+      circle(x + cellSize / 2, height / 2, cellSize);
+    }
   }
 }
