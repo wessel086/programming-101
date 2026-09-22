@@ -1,5 +1,5 @@
 function setup() {
-  createCanvas(400, 60);
+  createCanvas(400, 400);
   noStroke();
   fill(60);
 }
@@ -9,14 +9,13 @@ function draw() {
 
   let count = 10;
   let cellSize = width / count;
-
-  for (let i = 0; i < count; i++) {
-    let x = i * cellSize;
-
-    if (i % 2 === 0) {
-      square(x, height / 2 - cellSize / 2, cellSize);
+ for (let row = 0; row < count; row++) {
+  for (let col = 0; col < count; col++) {
+    if (col % 2 === 0) {
+      square(col * cellSize, row * cellSize, cellSize);
     } else {
-      circle(x + cellSize / 2, height / 2, cellSize);
+      circle(col * cellSize + cellSize / 2, row * cellSize + cellSize / 2, cellSize);
     }
   }
+ }
 }
