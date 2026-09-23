@@ -1,7 +1,10 @@
-let x = 0;  // ← blijft bestaan tussen frames
+let x = 20;
+let y = 20;
+let vx = 2;
+let vy = 1.2;
 
 function setup() {
-  createCanvas(300, 100);
+  createCanvas(300, 200);
   noStroke();
   fill(80, 140, 255);
 }
@@ -9,7 +12,8 @@ function setup() {
 function draw() {
   background(240);
 
-  x = x + 2;  // bouwt voort op de vorige waarde
+  x = x + vx;
+  y = y + vy;
 
-  circle(x, height / 2, 30);
+  circle(x, y, 30);
 }
