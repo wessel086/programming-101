@@ -1,10 +1,8 @@
-let x = 20;
-let y = 20;
-let vx = 2;
-let vy = 1.2;
+let x = 0;
+let vx = 3;
 
 function setup() {
-  createCanvas(300, 200);
+  createCanvas(300, 100);
   noStroke();
   fill(80, 140, 255);
 }
@@ -13,7 +11,10 @@ function draw() {
   background(240);
 
   x = x + vx;
-  y = y + vy;
 
-  circle(x, y, 30);
+  if (x > width + 15) {
+    x = -15;
+  }
+
+  circle(x, height / 2, 30);
 }
