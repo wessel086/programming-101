@@ -3,3 +3,4 @@
 #https://www.youtube.com/watch?v=SFAQ9cn5ImE# //for loop//
 #https://www.youtube.com/watch?v=nicMAoW6u1g# //map() function//
 //https://www.youtube.com/watch?v=5FwBd2eZcNM//
+// https://www.youtube.com/watch?v=MA_aFQV9vss // bewegen dmv input //
