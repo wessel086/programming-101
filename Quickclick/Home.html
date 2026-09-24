@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quick click</title>
-    <div id="startscherm">
-    <h1>⚡ QuickClick</h1>
-    <p id="highscore">Highscore: 0</p>
-    <input type="text" id="naamInvoer" placeholder="Jouw naam...">
-    <button id="startKnop">START GAME</button>
-  </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Click</title>
+    <link rel="stylesheet" href="styleqc.css">
+  </head>
+  <body>
 
-  <link rel="stylesheet" href="styleqc.css">
-</head>
-<body>
-  <main></main>
+    <header>
+      <h1>Quick Click</h1>
+      <p>Blijf levend en schiet alle cirkels!</p>
+    </header>
 
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js"></script>
-  <script src="quickclick.js"></script>
-</body>
+    <main>
+      <div id="startscherm">
+        <p id="highscore">Highscore: 0</p>
+        <input type="text" id="naamInvoer" placeholder="Jouw naam...">
+        <button id="startKnop">START GAME</button>
+      </div>
+    </main>
+
+    <footer>
+      <p>Wessel - QuickClick</p>
+    </footer>
+
+    <script src="quickclick.js"></script>
+  </body>
+</html>
