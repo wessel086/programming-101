@@ -1,29 +1,30 @@
-let x, y, vx, vy, diameter, gray;
+let xPositions = [];
+let speeds = [];
+let sizes = [];
+let grayShades = [];
 
 function setup() {
-  createCanvas(300, 180);
+  createCanvas(360, 160);
   noStroke();
 
-  x = random(width);
-  y = random(height);
-  vx = random(-3, 3);
-  vy = random(-3, 3);
-  diameter = random(20, 50);
-  gray = random(60, 200);
+  for (let i = 0; i < 10; i++) {
+    xPositions.push(random(width));
+    speeds.push(random(0.5, 3));
+    sizes.push(random(15, 45));
+    grayShades.push(random(60, 220));
+  }
 }
 
 function draw() {
   background(240);
 
-  x += vx;
-  y += vy;
+  for (let i = 0; i < xPositions.length; i++) {
+    xPositions[i] += speeds[i];
+    if (xPositions[i] > width + sizes[i]) {
+      xPositions[i] = -sizes[i];
+    }
 
-  // Weer in beeld brengen
-  if (x < -diameter) x = width + diameter;
-  if (x > width + diameter) x = -diameter;
-  if (y < -diameter) y = height + diameter;
-  if (y > height + diameter) y = -diameter;
-
-  fill(gray);
-  circle(x, y, diameter);
+    fill(grayShades[i]);
+    circle(xPositions[i], height / 2, sizes[i]);
+  }
 }
