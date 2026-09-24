@@ -26,7 +26,7 @@ function updateBall() {
   let radius = ball.diameter / 2;
   if (ball.x - radius < 0)      { ball.x = radius;          ball.vx = -ball.vx; }
   if (ball.x + radius > width)  { ball.x = width - radius;  ball.vx = -ball.vx; }
-  if (ball.y - radius < 0)      { ball.y = radius;          ball.vy = -ball.vy; }
+  if (ball.y - radius < 0)      { ball.y = radius; ball.vy = -ball.vy; }
   if (ball.y + radius > height) { ball.y = height - radius; ball.vy = -ball.vy; }
 }
 
