@@ -1,34 +1,39 @@
-let balls = [];
+let x = 60;
+let y = 50;
+let vx = 3.5;
+let vy = 2.4;
+let diameter = 36;
 
 function setup() {
   createCanvas(320, 200);
   noStroke();
-
-  for (let i = 0; i < 25; i++) {
-    balls.push({
-      x: random(width),
-      y: random(height),
-      diameter: random(10, 50),
-      vx: random(-1.5, 1.5),
-      vy: random(-1.5, 1.5),
-      gray: random(40, 200) 
-    });
-  }
+  fill(60);
 }
 
 function draw() {
   background(220);
 
-  for (let ball of balls) {
-    ball.x += ball.vx;
-    ball.y += ball.vy;
+  x = x + vx;
+  y = y + vy;
 
-    if (ball.x < -ball.diameter) ball.x = width + ball.diameter;
-    if (ball.x > width + ball.diameter) ball.x = -ball.diameter;
-    if (ball.y < -ball.diameter) ball.y = height + ball.diameter;
-    if (ball.y > height + ball.diameter) ball.y = -ball.diameter;
+  let radius = diameter / 2;
 
-    fill(ball.gray);
-    circle(ball.x, ball.y, ball.diameter);
+  if (x - radius < 0) {
+    x = radius;
+    vx = -vx;
   }
+  if (x + radius > width) {
+    x = width - radius;
+    vx = -vx;
+  }
+  if (y - radius < 0) {
+    y = radius;
+    vy = -vy;
+  }
+  if (y + radius > height) {
+    y = height - radius;
+    vy = -vy;
+  }
+
+  circle(x, y, diameter);
 }
