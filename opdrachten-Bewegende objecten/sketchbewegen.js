@@ -1,24 +1,18 @@
 let x;
 let y;
-let vx = 2;
+let diameter;
 
 function setup() {
-  createCanvas(300, 120);
+  createCanvas(300, 150);
   noStroke();
-  fill(60);
+  fill(80, 140, 255);
 
-  x = width / 2;
-  y = height / 2;
+  x = random(width);
+  y = random(height);
+  diameter = random(20, 60);
 }
 
 function draw() {
-  background(220);
-
-  x = x + vx;
-
-  if (x > width + 20) {
-    x = -20;
-  }
-
-  circle(x, y, 40);
+  background(240);
+  circle(x, y, diameter);
 }
