@@ -1,6 +1,4 @@
-let xPositions = [];
-let yPositions = [];
-let diameters = [];
+let balls = [];
 
 function setup() {
   createCanvas(320, 200);
@@ -8,16 +6,29 @@ function setup() {
   fill(60);
 
   for (let i = 0; i < 25; i++) {
-    xPositions.push(random(width));
-    yPositions.push(random(height));
-    diameters.push(random(10, 50));
+    balls.push({
+      x: random(width),
+      y: random(height),
+      diameter: random(10, 50),
+      vx: random(-1.5, 1.5),
+      vy: random(-1.5, 1.5)
+    });
   }
 }
 
 function draw() {
   background(220);
 
-  for (let i = 0; i < xPositions.length; i++) {
-    circle(xPositions[i], yPositions[i], diameters[i]);
+  for (let ball of balls) {
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+
+
+    if (ball.x < -ball.diameter) ball.x = width + ball.diameter;
+    if (ball.x > width + ball.diameter) ball.x = -ball.diameter;
+    if (ball.y < -ball.diameter) ball.y = height + ball.diameter;
+    if (ball.y > height + ball.diameter) ball.y = -ball.diameter;
+
+    circle(ball.x, ball.y, ball.diameter);
   }
 }
