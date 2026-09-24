@@ -1,26 +1,21 @@
+let x;
+let y;
+let vx = 2;
+let vy = 2;
+
 function setup() {
-  createCanvas(300, 300);
+  createCanvas(300, 200);
   noStroke();
   fill(60);
+  x = width / 2;
+  y = height / 2;
 }
 
 function draw() {
   background(220);
 
-  let count = 24;
-  let cellSize = width / count;
+  x = x + vx;
+  y = y + vx;
 
-for (let row = 0; row < count; row++) {
-  for (let col = 0; col < count; col++) {
-    let redValue = map(col, 0, count - 1, 40, 255);
-    let greenValue = map(row, 0, count - 1, 40, 255);
-    fill(redValue, greenValue, 160);
-
-    if ((row + col) % 2 === 0) {
-      square(col * cellSize, row * cellSize, cellSize);
-    } else {
-      circle(col * cellSize + cellSize / 2, row * cellSize + cellSize / 2, cellSize);
-    }
-  }
-}
+  circle(x, y, 40);
 }
