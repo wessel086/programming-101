@@ -24,3 +24,17 @@ header {
 canvas {
   display: block;
 }
+
+main {
+  display: flex;
+  min-height: calc(100vh - 130px);
+}
+
+.links,
+.rechts {
+  flex: 1;
+}
+
+.midden {
+  flex: 2;
+}
