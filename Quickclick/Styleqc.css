@@ -3,6 +3,17 @@ html, body {
   padding: 0;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0f0f0f;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
 canvas {
   display: block;
 }
