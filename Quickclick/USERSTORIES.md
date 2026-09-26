@@ -6,17 +6,17 @@ Mijn User Stories zijn mijn idealen. De mogelijkheid dat alles niet is zoals dit
 
 ## 1. HTML & CSS: Homepagina
 
-- [ ] **Homescherm**
+- [v] **Homescherm**
 Als gebruiker wil ik dat ik op het homescherm terechtkom wanneer ik de pagina open, zodat ik een duidelijk startpunt heb.
 
 De homepagina is de eerste pagina die laadt. Het homescherm toont minimaal de titel, een level keuze en de knop "Start Game". Er is geen automatische redirect naar een andere pagina.
 
-- [ ] **Naam invoeren**
+- [v] **Naam invoeren**
 Als gebruiker wil ik mijn naam kunnen invoeren op het homescherm, zodat de pagina mij kan onthouden en mijn naam kan tonen.
 
 De gebruiker voert een naam in via een invoerveld op het homescherm. De naam wordt opgeslagen via localStorage. De naam is zichtbaar op het homescherm na het invoeren.
 
-- [ ] **Gebruiker onthouden**
+- [v] **Gebruiker onthouden**
 Als gebruiker wil ik dat de pagina mij onthoudt wanneer ik de pagina open, zodat mijn gegevens en voortgang bewaard blijven.
 
 De gebruikersnaam of gegevens worden opgeslagen via localStorage. Bij het opnieuw openen van de pagina zijn de gegevens nog aanwezig. De gegevens verdwijnen niet na het sluiten van de browser.
