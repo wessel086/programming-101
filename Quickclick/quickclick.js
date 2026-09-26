@@ -20,6 +20,7 @@ if (savedName) {
   nameInput.value = savedName;
 }
 
+// --- Highscore and update logic ---
 const highscoreElement = document.querySelector(".highscore");
 
 function displayHighscore() {
