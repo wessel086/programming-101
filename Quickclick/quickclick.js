@@ -13,3 +13,9 @@ function draw() {
 nameInput.addEventListener("input", () => {
   localStorage.setItem("qc_name", nameInput.value);
 });
+
+// --- Load saved name when the page opens ---
+const savedName = localStorage.getItem("qc_name");
+if (savedName) {
+  nameInput.value = savedName;
+}
