@@ -10,33 +10,34 @@
 
     <header>
       <h1>Quick Click</h1>
-      <p>Blijf levend en schiet alle cirkels!</p>
+      <p>Stay alive and shoot all the circles!</p>
     </header>
 
     <main>
-      <aside class="links"></aside>
+      <aside class="left"></aside>
 
-      <section class="midden">
-        <div class="startscherm">
+      <section class="middle">
+        <div class="start-screen">
           <p class="highscore">Highscore: 0</p>
-          <input type="text" class="naamInvoer" placeholder="Jouw naam...">
-          <div class="levelKeuze">
-            <button class="levelKnop" data-level="1">Level 1</button>
-            <button class="levelKnop" data-level="2">Level 2</button>
-            <button class="levelKnop" data-level="3">Level 3</button>
-            <button class="levelKnop" data-level="4">Level 4</button>
+          <input type="text" class="name-input" placeholder="Your name...">
+          <div class="level-select">
+            <button class="level-btn" data-level="1">Level 1</button>
+            <button class="level-btn" data-level="2">Level 2</button>
+            <button class="level-btn" data-level="3">Level 3</button>
+            <button class="level-btn" data-level="4">Level 4</button>
           </div>
-          <button class="startKnop">START GAME</button>
+          <button class="start-btn">START GAME</button>
         </div>
       </section>
 
-      <aside class="rechts"></aside>
+      <aside class="right"></aside>
     </main>
 
     <footer>
       <p>Wessel - QuickClick</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
     <script src="quickclick.js"></script>
   </body>
 </html>
