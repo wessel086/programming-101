@@ -19,3 +19,20 @@ const savedName = localStorage.getItem("qc_name");
 if (savedName) {
   nameInput.value = savedName;
 }
+
+const highscoreElement = document.querySelector(".highscore");
+
+function displayHighscore() {
+  const highscore = localStorage.getItem("qc_highscore") || 0;
+  highscoreElement.textContent = `Highscore: ${highscore}`;
+}
+
+function updateHighscoreIfHigher(newScore) {
+  const currentHighscore = parseInt(localStorage.getItem("qc_highscore")) || 0;
+  if (newScore > currentHighscore) {
+    localStorage.setItem("qc_highscore", newScore);
+  }
+  displayHighscore();
+}
+
+displayHighscore();
