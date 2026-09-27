@@ -4,40 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Click</title>
-    <link rel="stylesheet" href="styleqc.css">
+    <link rel="stylesheet" href="Styleqc.css">
   </head>
   <body>
 
-    <header>
+    <header class="page-header">
       <h1>Quick Click</h1>
-      <p>Stay alive and shoot all the circles!</p>
+      <p>Blijf levend en schiet alle cirkels!</p>
     </header>
 
     <main>
-      <aside class="left"></aside>
+      <aside class="side-column left-column" aria-label="Speluitleg">
+        <section class="info-panel">
+          <h2>Controls</h2>
+          <p>Klik op de cirkels om punten te verdienen.</p>
+        </section>
+        <section class="info-panel bonus-panel">
+          <h2>Bonussen</h2>
+          <ul>
+            <li><span class="bonus-dot gold-dot"></span><span>Gold target</span><strong>+5 punten</strong></li>
+            <li><span class="bonus-dot green-dot"></span><span>Time target</span><strong>+3 seconden</strong></li>
+            <li><span class="bonus-dot gray-dot"></span><span>Mis een target</span><strong>−2 seconden</strong></li>
+          </ul>
+        </section>
+      </aside>
 
       <section class="middle">
         <div class="start-screen">
-          <p class="highscore">Highscore: 0</p>
-          <input type="text" class="name-input" placeholder="Your name...">
+          <label class="name-label" for="player-name">Naam invoeren</label>
+          <input id="player-name" type="text" class="name-input" placeholder="Jouw naam..." autocomplete="name">
           <div class="level-select">
+            <p>Kies je level</p>
             <button class="level-btn" data-level="1">Level 1</button>
             <button class="level-btn" data-level="2">Level 2</button>
             <button class="level-btn" data-level="3">Level 3</button>
             <button class="level-btn" data-level="4">Level 4</button>
           </div>
-          <button class="start-btn">START GAME</button>
+          <button class="start-btn">Start game</button>
+          <p class="highscore">Highscore: 0</p>
         </div>
       </section>
 
-      <aside class="right"></aside>
+      <aside class="side-column right-column" aria-label="Eerdere scores">
+        <section class="info-panel score-panel">
+          <h2>Previous scores</h2>
+          <p class="panel-empty">Je scores verschijnen hier.</p>
+        </section>
+      </aside>
     </main>
 
-    <footer>
+    <footer class="page-footer">
       <p>Wessel - QuickClick</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
     <script src="quickclick.js"></script>
   </body>
 </html>
