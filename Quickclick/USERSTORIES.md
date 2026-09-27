@@ -40,7 +40,7 @@ Klikken op "Start Game" opent game.html. De knop werkt alleen als er een level g
 
 ## 2. HTML & CSS: Gamepagina
 
-- [-] **Canvas grootte**
+- [v] **Canvas grootte**
   Als gebruiker wil ik dat de targets spawnen op een canvas dat 80% van de schermhoogte inneemt, zodat er ruimte is voor de UI bovenin.
 
 Het canvas beslaat 80% van de schermhoogte, gemeten vanaf de onderkant. De bovenste 20% is vrij voor de UI. Targets spawnen nooit buiten het canvas.
