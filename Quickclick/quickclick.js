@@ -1,13 +1,6 @@
-// --- Element references (global, so later commits can use them too) ---
 const nameInput = document.querySelector(".name-input");
-
-function setup() {
-  createCanvas(640, 480);
-}
-
-function draw() {
-  background(20);
-}
+const levelButtons = document.querySelectorAll(".level-btn");
+const startButton = document.querySelector(".start-btn");
 
 // --- Save name while typing ---
 nameInput.addEventListener("input", () => {
@@ -19,6 +12,31 @@ const savedName = localStorage.getItem("qc_name");
 if (savedName) {
   nameInput.value = savedName;
 }
+
+let selectedLevel = null;
+
+levelButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    levelButtons.forEach((levelButton) => {
+      levelButton.classList.remove("selected");
+      levelButton.setAttribute("aria-pressed", "false");
+    });
+
+    button.classList.add("selected");
+    button.setAttribute("aria-pressed", "true");
+    selectedLevel = button.dataset.level;
+    startButton.disabled = false;
+  });
+});
+
+startButton.addEventListener("click", () => {
+  if (selectedLevel === null) {
+    return;
+  }
+
+  localStorage.setItem("qc_level", selectedLevel);
+  window.location.href = "game.html";
+});
 
 // --- Highscore and update logic ---
 const highscoreElement = document.querySelector(".highscore");

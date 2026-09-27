@@ -116,6 +116,17 @@ main {
   background-color: #2857b8;
 }
 
+.level-btn.selected {
+  border: 3px solid white;
+  background-color: #444;
+}
+
+.start-btn:disabled {
+  background-color: #555;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
 .highscore {
   margin: 0;
   color: gold;
@@ -148,5 +159,67 @@ main {
 
   .middle {
     order: -1;
+  }
+}
+
+.game-body {
+  min-height: 100vh;
+}
+
+.game-header {
+  display: flex;
+  min-height: 20vh;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 5%;
+  border-bottom: 2px solid white;
+}
+
+.game-stat {
+  min-width: 150px;
+  font-size: 24px;
+}
+
+.game-stat p {
+  margin: 8px 0;
+}
+
+.game-timer {
+  font-size: 36px;
+  text-align: center;
+}
+
+.game-body main {
+  display: block;
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.game-canvas {
+  width: 100%;
+  height: 80vh;
+  background-color: #181818;
+}
+
+.game-canvas canvas {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .game-header {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .game-stat {
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .game-timer {
+    font-size: 26px;
   }
 }
