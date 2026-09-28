@@ -78,8 +78,8 @@ De score toont 0 bij de start van elke game. De score is zichtbaar in de UI bove
 
 Elke target spawnt op een willekeurige X en Y positie binnen het canvas. Een target staat nooit buiten de grenzen van het canvas. De positie wordt bepaald via `circle(randomX, randomY, diameter)`.
 
-- [ ] **Target grootte**
-      Als gebruiker wil ik dat alle targets standaard een diameter hebben van 10% van de schermbreedte, zodat ze goed zichtbaar zijn.
+- [v] **Target grootte**
+  Als gebruiker wil ik dat alle targets standaard een diameter hebben van 10% van de schermbreedte, zodat ze goed zichtbaar zijn.
 
 De diameter van een target is gelijk aan 10% van de breedte van het scherm. De grootte past zich aan als het scherm van formaat verandert. In level 4 zijn targets 40% kleiner dan de standaard grootte.
 
