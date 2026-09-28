@@ -45,13 +45,13 @@ Klikken op "Start Game" opent game.html. De knop werkt alleen als er een level g
 
 Het canvas beslaat 80% van de schermhoogte, gemeten vanaf de onderkant. De bovenste 20% is vrij voor de UI. Targets spawnen nooit buiten het canvas.
 
-- [ ] **Score zichtbaar tijdens het spelen**
-      Als gebruiker wil ik de huidige score zien terwijl ik speel, zodat ik weet hoe ik het doe.
+- [v] **Score zichtbaar tijdens het spelen**
+  Als gebruiker wil ik de huidige score zien terwijl ik speel, zodat ik weet hoe ik het doe.
 
 De score wordt live bijgewerkt na elke klik. De score staat altijd zichtbaar op het scherm tijdens het spelen.
 
-- [ ] **Starttimer**
-      Als gebruiker wil ik dat de timer begint op 00:30 zodra de game start, zodat ik weet hoeveel tijd ik heb.
+- [v] **Starttimer**
+  Als gebruiker wil ik dat de timer begint op 00:30 zodra de game start, zodat ik weet hoeveel tijd ik heb.
 
 De timer toont 00:30 bij de start van de game. De timer telt af in seconden. De timer is zichtbaar in de UI bovenin het scherm. De timer stopt als hij 00:00 bereikt.
 
