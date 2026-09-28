@@ -17,7 +17,8 @@ const targets = [];
 
 function updateTargetDiameter() {
   const standardDiameter = windowWidth * 0.1;
-  targetDiameter = savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
+  targetDiameter =
+    savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
 }
 
 function setRandomTargetPosition() {
