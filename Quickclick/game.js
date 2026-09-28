@@ -15,6 +15,8 @@ let targetDiameter;
 const maxTargets = 5;
 const targets = [];
 const normalTargetLifetime = 5000;
+const timeTargetLifetime = 3000;
+const goldTargetLifetime = 3000;
 
 function updateTargetDiameter() {
   const standardDiameter = windowWidth * 0.1;
@@ -53,6 +55,11 @@ function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function addTime(seconds) {
+  timeLeft += seconds;
+  updateTimerDisplay();
 }
 
 function startTimer() {
@@ -110,18 +117,28 @@ function draw() {
   background(24);
   noStroke();
 
-  // Normale targets verdwijnen na vijf seconden als ze niet zijn geraakt.
+  // Normale targets verdwijnen na vijf seconden; time targets na drie seconden.
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
-    if (
-      target.type === "normal" &&
-      millis() - target.spawnedAt >= normalTargetLifetime
-    ) {
+    let lifetime = normalTargetLifetime;
+    if (target.type === "time") {
+      lifetime = timeTargetLifetime;
+    } else if (target.type === "gold") {
+      lifetime = goldTargetLifetime;
+    }
+
+    if (millis() - target.spawnedAt >= lifetime) {
       targets.splice(index, 1);
       continue;
     }
 
-    fill("gray");
+    let targetColor = "gray";
+    if (target.type === "time") {
+      targetColor = "green";
+    } else if (target.type === "gold") {
+      targetColor = "gold";
+    }
+    fill(targetColor);
     circle(target.x, target.y, targetDiameter);
   }
 
@@ -140,6 +157,11 @@ function mousePressed() {
     if (distance < targetDiameter / 2) {
       if (target.type === "normal") {
         score += 1;
+        scoreDisplay.textContent = `Score: ${score}`;
+      } else if (target.type === "time") {
+        addTime(3);
+      } else if (target.type === "gold") {
+        score += 5;
         scoreDisplay.textContent = `Score: ${score}`;
       }
       targets.splice(index, 1);

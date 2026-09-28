@@ -102,12 +102,12 @@ Bij elke spawn wordt een willekeurig getal gebruikt met gewichten: 90 delen norm
 
 Het target heeft de kleur grijs via `fill("gray")`. Het target verdwijnt na 5 seconden als het niet geklikt wordt. Klikken op het target geeft +1 punt. Het target verdwijnt direct na een klik.
 
-- [ ] **Time target (groen)**
+- [v] **Time target (groen)**
       Als gebruiker wil ik dat een time target groen is en bij klikken 3 seconden toevoegt aan de timer.
 
 Het target heeft de kleur groen via `fill("green")`. Het target verdwijnt na 3 seconden als het niet geklikt wordt. Klikken op het target voegt +3 seconden toe aan de timer. Het target verdwijnt direct na een klik.
 
-- [ ] **Gold target (goud)**
+- [v] **Gold target (goud)**
       Als gebruiker wil ik dat een gold target goud is en bij klikken 5 punten geeft.
 
 Het target heeft de kleur goud via `fill("gold")`. Het target verdwijnt na 3 seconden als het niet geklikt wordt. Klikken op het target geeft +5 punten. Het target verdwijnt direct na een klik.
