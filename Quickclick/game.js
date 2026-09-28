@@ -14,6 +14,7 @@ let gameStarted = false;
 let targetDiameter;
 const maxTargets = 5;
 const targets = [];
+const normalTargetLifetime = 5000;
 
 function updateTargetDiameter() {
   const standardDiameter = windowWidth * 0.1;
@@ -35,7 +36,7 @@ function setRandomTargetPosition() {
     type = "time";
   }
 
-  return { x: randomX, y: randomY, type };
+  return { x: randomX, y: randomY, type, spawnedAt: millis() };
 }
 
 function spawnTarget() {
@@ -68,6 +69,10 @@ function startTimer() {
 function startGame() {
   score = 0;
   scoreDisplay.textContent = `Score: ${score}`;
+  // De levensduur begint zodra het spel start, niet tijdens de countdown.
+  for (const target of targets) {
+    target.spawnedAt = millis();
+  }
   gameStarted = true;
   startTimer();
 }
@@ -103,11 +108,24 @@ function setup() {
 
 function draw() {
   background(24);
-  fill("gray");
   noStroke();
-  for (const target of targets) {
+
+  // Normale targets verdwijnen na vijf seconden als ze niet zijn geraakt.
+  for (let index = targets.length - 1; index >= 0; index -= 1) {
+    const target = targets[index];
+    if (
+      target.type === "normal" &&
+      millis() - target.spawnedAt >= normalTargetLifetime
+    ) {
+      targets.splice(index, 1);
+      continue;
+    }
+
+    fill("gray");
     circle(target.x, target.y, targetDiameter);
   }
+
+  fillTargetSlots();
 }
 
 function mousePressed() {
@@ -120,8 +138,10 @@ function mousePressed() {
     const distance = dist(mouseX, mouseY, target.x, target.y);
 
     if (distance < targetDiameter / 2) {
-      score += 1;
-      scoreDisplay.textContent = `Score: ${score}`;
+      if (target.type === "normal") {
+        score += 1;
+        scoreDisplay.textContent = `Score: ${score}`;
+      }
       targets.splice(index, 1);
       fillTargetSlots();
       break;

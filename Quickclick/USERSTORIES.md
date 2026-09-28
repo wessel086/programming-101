@@ -97,7 +97,7 @@ Bij elke spawn wordt een willekeurig getal gebruikt met gewichten: 90 delen norm
 
 ## 5. JavaScript: Target types & kleuren
 
-- [ ] **Normaal target (grijs)**
+- [v] **Normaal target (grijs)**
       Als gebruiker wil ik dat een normaal target grijs is en bij klikken 1 punt geeft.
 
 Het target heeft de kleur grijs via `fill("gray")`. Het target verdwijnt na 5 seconden als het niet geklikt wordt. Klikken op het target geeft +1 punt. Het target verdwijnt direct na een klik.
