@@ -11,17 +11,40 @@ let score = 0;
 let timeLeft = 30;
 let timerInterval;
 let gameStarted = false;
-let targetX;
-let targetY;
-const targetDiameter = 80;
+let targetDiameter;
+const maxTargets = 5;
+const targets = [];
+
+function updateTargetDiameter() {
+  const standardDiameter = windowWidth * 0.1;
+  targetDiameter = savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
+}
 
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
   const randomX = random(radius, width - radius);
   const randomY = random(radius, height - radius);
 
-  targetX = randomX;
-  targetY = randomY;
+  const spawnRoll = random(107);
+  let type = "normal";
+
+  if (spawnRoll >= 100) {
+    type = "gold";
+  } else if (spawnRoll >= 90) {
+    type = "time";
+  }
+
+  return { x: randomX, y: randomY, type };
+}
+
+function spawnTarget() {
+  targets.push(setRandomTargetPosition());
+}
+
+function fillTargetSlots() {
+  while (targets.length < maxTargets) {
+    spawnTarget();
+  }
 }
 
 function updateTimerDisplay() {
@@ -73,14 +96,17 @@ function setup() {
   const canvas = createCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
   canvas.parent(canvasArea);
 
-  setRandomTargetPosition();
+  updateTargetDiameter();
+  fillTargetSlots();
 }
 
 function draw() {
   background(24);
   fill("gray");
   noStroke();
-  circle(targetX, targetY, targetDiameter);
+  for (const target of targets) {
+    circle(target.x, target.y, targetDiameter);
+  }
 }
 
 function mousePressed() {
@@ -88,14 +114,23 @@ function mousePressed() {
     return;
   }
 
-  const distance = dist(mouseX, mouseY, targetX, targetY);
+  for (let index = targets.length - 1; index >= 0; index -= 1) {
+    const target = targets[index];
+    const distance = dist(mouseX, mouseY, target.x, target.y);
 
-  if (distance < targetDiameter / 2) {
-    score = score + 1;
-    scoreDisplay.textContent = `Score: ${score}`;
+    if (distance < targetDiameter / 2) {
+      score += 1;
+      scoreDisplay.textContent = `Score: ${score}`;
+      targets.splice(index, 1);
+      fillTargetSlots();
+      break;
+    }
   }
 }
 
 function windowResized() {
   resizeCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
+  updateTargetDiameter();
+  targets.length = 0;
+  fillTargetSlots();
 }

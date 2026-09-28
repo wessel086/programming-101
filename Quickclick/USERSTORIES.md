@@ -83,15 +83,15 @@ Elke target spawnt op een willekeurige X en Y positie binnen het canvas. Een tar
 
 De diameter van een target is gelijk aan 10% van de breedte van het scherm. De grootte past zich aan als het scherm van formaat verandert. In level 4 zijn targets 40% kleiner dan de standaard grootte.
 
-- [ ] **Maximaal aantal targets**
-      Als gebruiker wil ik dat er maximaal 5 targets tegelijk op het scherm staan, zodat het scherm niet te druk wordt.
+- [v] **Maximaal aantal targets**
+  Als gebruiker wil ik dat er maximaal 5 targets tegelijk op het scherm staan, zodat het scherm niet te druk wordt.
 
 Er staan nooit meer dan 5 targets tegelijk op het scherm. Een nieuwe target spawnt pas als er minder dan 5 actief zijn. Dit geldt voor alle target types samen.
 
-- [ ] **Spawn kansen per target**
-      Als gebruiker wil ik dat targets met de juiste kansen spawnen, zodat de game gevarieerd blijft.
+- [v] **Spawn kansen per target**
+  Als gebruiker wil ik dat targets met de juiste kansen spawnen, zodat de game gevarieerd blijft.
 
-Een normaal target heeft 90% kans om te spawnen. Een time target heeft 10% kans om te spawnen. Een gold target heeft 7% kans om te spawnen. De kansen worden bepaald via een random getal bij elke spawn.
+Bij elke spawn wordt een willekeurig getal gebruikt met gewichten: 90 delen normaal, 10 delen time en 7 delen gold. Dit komt neer op ongeveer 84%, 9% en 7%, omdat de oorspronkelijke percentages samen 107% zijn.
 
 ---
 
