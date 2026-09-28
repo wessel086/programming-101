@@ -121,7 +121,7 @@ Het target heeft de kleur goud via `fill("gold")`. Het target verdwijnt na 3 sec
 
 Een klik buiten een target trekt 2 seconden van de timer af. Dit wordt bijgehouden als een miss. De timer kan niet onder 00:00 komen door een miss.
 
-- [ ] **Target verdwijnt zonder klik**
+- [v] **Target verdwijnt zonder klik**
       Als gebruiker wil ik dat wanneer een target zijn tijd op het scherm heeft gehad zonder geklikt te worden, hij verdwijnt en er 2 seconden van de timer afgaan.
 
 Het target verdwijnt automatisch na zijn maximale tijd op het scherm. Bij het verdwijnen gaan er 2 seconden van de timer af. Dit geldt voor alle target types.

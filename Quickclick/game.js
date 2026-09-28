@@ -152,6 +152,7 @@ function draw() {
 
     if (millis() - target.spawnedAt >= lifetime) {
       targets.splice(index, 1);
+      subtractTime(2);
       continue;
     }
 
