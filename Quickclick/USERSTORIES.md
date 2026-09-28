@@ -64,8 +64,8 @@ De timer toont 00:30 bij de start van de game. De timer telt af in seconden. De 
 
 De countdown toont de cijfers 5, 4, 3, 2, 1 elk precies 1 seconde. Na 1 verschijnt de tekst "Start!". De game start direct na "Start!" en targets kunnen nog niet geklikt worden tijdens de countdown. De game timer start pas na de countdown.
 
-- [ ] **Startscore**
-      Als gebruiker wil ik dat de score op 0 staat wanneer de game start.
+- [v] **Startscore**
+  Als gebruiker wil ik dat de score op 0 staat wanneer de game start.
 
 De score toont 0 bij de start van elke game. De score is zichtbaar in de UI bovenin het scherm. Bij opnieuw spelen wordt de score gereset naar 0.
 

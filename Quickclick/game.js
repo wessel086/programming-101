@@ -32,6 +32,13 @@ function startTimer() {
   }, 1000);
 }
 
+function startGame() {
+  score = 0;
+  scoreDisplay.textContent = `Score: ${score}`;
+  gameStarted = true;
+  startTimer();
+}
+
 function startCountdown() {
   let countdown = 5;
   updateTimerDisplay();
@@ -46,8 +53,7 @@ function startCountdown() {
 
     clearInterval(countdownInterval);
     countdownDisplay.textContent = "Start!";
-    gameStarted = true;
-    startTimer();
+    startGame();
     setTimeout(() => countdownDisplay.remove(), 500);
   }, 1000);
 }
