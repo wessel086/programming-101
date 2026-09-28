@@ -62,6 +62,15 @@ function addTime(seconds) {
   updateTimerDisplay();
 }
 
+function subtractTime(seconds) {
+  timeLeft = Math.max(0, timeLeft - seconds);
+  updateTimerDisplay();
+
+  if (timeLeft === 0) {
+    clearInterval(timerInterval);
+  }
+}
+
 function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft -= 1;
@@ -150,6 +159,8 @@ function mousePressed() {
     return;
   }
 
+  let hitTarget = false;
+
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
     const distance = dist(mouseX, mouseY, target.x, target.y);
@@ -166,8 +177,13 @@ function mousePressed() {
       }
       targets.splice(index, 1);
       fillTargetSlots();
+      hitTarget = true;
       break;
     }
+  }
+
+  if (!hitTarget) {
+    subtractTime(2);
   }
 }
 

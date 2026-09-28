@@ -116,7 +116,7 @@ Het target heeft de kleur goud via `fill("gold")`. Het target verdwijnt na 3 sec
 
 ## 6. JavaScript: Straffen & feedback
 
-- [ ] **Missen**
+- [v] **Missen**
       Als gebruiker wil ik dat wanneer ik klik maar niet op een target tref, er 2 seconden van de timer afgaan.
 
 Een klik buiten een target trekt 2 seconden van de timer af. Dit wordt bijgehouden als een miss. De timer kan niet onder 00:00 komen door een miss.
