@@ -2,6 +2,7 @@ const canvasArea = document.querySelector(".game-canvas");
 const levelDisplay = document.querySelector(".level");
 const scoreDisplay = document.querySelector(".score");
 const timerDisplay = document.querySelector(".timer");
+const countdownDisplay = document.querySelector(".countdown");
 const savedLevel = localStorage.getItem("qc_level") || "1";
 
 levelDisplay.textContent = savedLevel;
@@ -9,6 +10,7 @@ levelDisplay.textContent = savedLevel;
 let score = 0;
 let timeLeft = 30;
 let timerInterval;
+let gameStarted = false;
 let targetX;
 let targetY;
 const targetDiameter = 80;
@@ -20,7 +22,6 @@ function updateTimerDisplay() {
 }
 
 function startTimer() {
-  updateTimerDisplay();
   timerInterval = setInterval(() => {
     timeLeft -= 1;
     updateTimerDisplay();
@@ -31,7 +32,27 @@ function startTimer() {
   }, 1000);
 }
 
-startTimer();
+function startCountdown() {
+  let countdown = 5;
+  updateTimerDisplay();
+
+  const countdownInterval = setInterval(() => {
+    countdown -= 1;
+
+    if (countdown > 0) {
+      countdownDisplay.textContent = countdown;
+      return;
+    }
+
+    clearInterval(countdownInterval);
+    countdownDisplay.textContent = "Start!";
+    gameStarted = true;
+    startTimer();
+    setTimeout(() => countdownDisplay.remove(), 500);
+  }, 1000);
+}
+
+startCountdown();
 
 function setup() {
   const canvas = createCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
@@ -49,6 +70,10 @@ function draw() {
 }
 
 function mousePressed() {
+  if (!gameStarted) {
+    return;
+  }
+
   const distance = dist(mouseX, mouseY, targetX, targetY);
 
   if (distance < targetDiameter / 2) {

@@ -59,8 +59,8 @@ De timer toont 00:30 bij de start van de game. De timer telt af in seconden. De 
 
 ## 3. JavaScript: Countdown & Gamestart
 
-- [ ] **Countdown voor de game**
-      Als gebruiker wil ik dat er een countdown in beeld verschijnt zodra ik op "Start Game" heb geklikt, zodat ik weet wanneer de game begint.
+- [v] **Countdown voor de game**
+  Als gebruiker wil ik dat er een countdown in beeld verschijnt zodra ik op "Start Game" heb geklikt, zodat ik weet wanneer de game begint.
 
 De countdown toont de cijfers 5, 4, 3, 2, 1 elk precies 1 seconde. Na 1 verschijnt de tekst "Start!". De game start direct na "Start!" en targets kunnen nog niet geklikt worden tijdens de countdown. De game timer start pas na de countdown.
 
