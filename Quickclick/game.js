@@ -5,8 +5,10 @@ const timerDisplay = document.querySelector(".timer");
 const countdownDisplay = document.querySelector(".countdown");
 const savedLevel = localStorage.getItem("qc_level") || "1";
 
+// Toont het level dat de speler op de startpagina heeft gekozen.
 levelDisplay.textContent = savedLevel;
 
+// Bewaart de score, tijd, targets en instellingen die tijdens het spel veranderen.
 let score = 0;
 let timeLeft = 30;
 let timerInterval;
@@ -18,12 +20,14 @@ const normalTargetLifetime = 5000;
 const timeTargetLifetime = 3000;
 const goldTargetLifetime = 3000;
 
+// Berekent de targetgrootte op basis van het scherm en maakt targets kleiner in level 4.
 function updateTargetDiameter() {
   const standardDiameter = windowWidth * 0.1;
   targetDiameter =
     savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
 }
 
+// Kiest een willekeurige plek en een targettype voor een nieuw target.
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
   const randomX = random(radius, width - radius);
@@ -41,27 +45,32 @@ function setRandomTargetPosition() {
   return { x: randomX, y: randomY, type, spawnedAt: millis() };
 }
 
+// Maakt één target en voegt het toe aan de lijst met actieve targets.
 function spawnTarget() {
   targets.push(setRandomTargetPosition());
 }
 
+// Vult lege plekken aan totdat er maximaal vijf targets tegelijk zijn.
 function fillTargetSlots() {
   while (targets.length < maxTargets) {
     spawnTarget();
   }
 }
 
+// Zet de resterende tijd om naar minuten en seconden en toont die in beeld.
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
+// Geeft seconden bij de timer op en werkt de weergave meteen bij.
 function addTime(seconds) {
   timeLeft += seconds;
   updateTimerDisplay();
 }
 
+// Haalt seconden van de timer af, zonder dat de tijd onder nul komt.
 function subtractTime(seconds) {
   timeLeft = Math.max(0, timeLeft - seconds);
   updateTimerDisplay();
@@ -71,6 +80,7 @@ function subtractTime(seconds) {
   }
 }
 
+// Laat de timer elke seconde één seconde aftellen.
 function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft -= 1;
@@ -82,6 +92,7 @@ function startTimer() {
   }, 1000);
 }
 
+// Zet de score klaar en start de timer nadat de countdown is afgelopen.
 function startGame() {
   score = 0;
   scoreDisplay.textContent = `Score: ${score}`;
@@ -93,6 +104,7 @@ function startGame() {
   startTimer();
 }
 
+// Telt vijf seconden af en start daarna het spel.
 function startCountdown() {
   let countdown = 5;
   updateTimerDisplay();
@@ -114,6 +126,7 @@ function startCountdown() {
 
 startCountdown();
 
+// Maakt het canvas en vult het begin van het spel met targets.
 function setup() {
   const canvas = createCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
   canvas.parent(canvasArea);
@@ -122,6 +135,7 @@ function setup() {
   fillTargetSlots();
 }
 
+// Tekent elk frame de targets en verwijdert targets die te lang zijn blijven staan.
 function draw() {
   background(24);
   noStroke();
@@ -154,6 +168,7 @@ function draw() {
   fillTargetSlots();
 }
 
+// Controleert of de speler een target raakt en geeft de bijbehorende beloning.
 function mousePressed() {
   if (!gameStarted) {
     return;
@@ -187,6 +202,7 @@ function mousePressed() {
   }
 }
 
+// Past het canvas en de targets aan wanneer het browservenster van formaat verandert.
 function windowResized() {
   resizeCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
   updateTargetDiameter();
