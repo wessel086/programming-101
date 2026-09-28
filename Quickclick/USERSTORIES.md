@@ -73,8 +73,8 @@ De score toont 0 bij de start van elke game. De score is zichtbaar in de UI bove
 
 ## 4. JavaScript: Targets spawnen
 
-- [ ] **Target positie**
-      Als gebruiker wil ik dat targets op een willekeurige positie binnen het canvas spawnen, zodat de game onvoorspelbaar is.
+- [v] **Target positie**
+  Als gebruiker wil ik dat targets op een willekeurige positie binnen het canvas spawnen, zodat de game onvoorspelbaar is.
 
 Elke target spawnt op een willekeurige X en Y positie binnen het canvas. Een target staat nooit buiten de grenzen van het canvas. De positie wordt bepaald via `circle(randomX, randomY, diameter)`.
 

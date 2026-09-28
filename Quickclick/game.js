@@ -15,6 +15,15 @@ let targetX;
 let targetY;
 const targetDiameter = 80;
 
+function setRandomTargetPosition() {
+  const radius = targetDiameter / 2;
+  const randomX = random(radius, width - radius);
+  const randomY = random(radius, height - radius);
+
+  targetX = randomX;
+  targetY = randomY;
+}
+
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -64,8 +73,7 @@ function setup() {
   const canvas = createCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
   canvas.parent(canvasArea);
 
-  targetX = width / 2;
-  targetY = height / 2;
+  setRandomTargetPosition();
 }
 
 function draw() {
