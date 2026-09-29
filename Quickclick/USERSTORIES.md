@@ -140,7 +140,7 @@ Bij een raak verschijnt kort een groen rondje op de plek van het target. Bij een
 
 Het game over scherm verschijnt direct als de timer 00:00 bereikt. De eindscore en de highscore zijn zichtbaar op het game over scherm, zodat de speler direct ziet of hij een record heeft gehaald. De game stopt volledig en er kunnen geen targets meer geklikt worden.
 
-- [ ] **Opnieuw spelen**
+- [v] **Opnieuw spelen**
       Als gebruiker wil ik op het game over scherm een knop "Opnieuw" zien die het huidige level opnieuw start.
 
 De knop "Opnieuw" is zichtbaar op het game over scherm. Klikken op "Opnieuw" herstart het huidige level. De score en timer worden gereset naar de beginwaarden.

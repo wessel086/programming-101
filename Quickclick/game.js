@@ -6,6 +6,7 @@ const countdownDisplay = document.querySelector(".countdown");
 const gameOverDisplay = document.querySelector(".game-over");
 const finalScoreDisplay = document.querySelector(".final-score");
 const finalHighscoreDisplay = document.querySelector(".final-highscore");
+const restartButton = document.querySelector(".restart-button");
 const savedLevel = localStorage.getItem("qc_level") || "1";
 
 // Toont het level dat de speler op de startpagina heeft gekozen.
@@ -133,6 +134,7 @@ function startGame() {
 // Telt vijf seconden af en start daarna het spel.
 function startCountdown() {
   let countdown = 5;
+  countdownDisplay.textContent = countdown;
   countdownDisplay.hidden = false;
   updateTimerDisplay();
 
@@ -153,7 +155,25 @@ function startCountdown() {
   }, 1000);
 }
 
-startCountdown()
+// Zet de score en tijd terug en start hetzelfde level opnieuw.
+function restartGame() {
+  clearInterval(timerInterval);
+  gameOver = false;
+  gameStarted = false;
+  score = 0;
+  timeLeft = 30;
+  clickFeedback = null;
+  targets.length = 0;
+
+  scoreDisplay.textContent = `Score: ${score}`;
+  updateTimerDisplay();
+  gameOverDisplay.hidden = true;
+  fillTargetSlots();
+  startCountdown();
+}
+
+restartButton.addEventListener("click", restartGame);
+startCountdown();
 
 // Maakt het canvas en vult het begin van het spel met targets.
 function setup() {

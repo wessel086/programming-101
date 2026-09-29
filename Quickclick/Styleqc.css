@@ -239,6 +239,12 @@ main {
   margin: 10px;
 }
 
+.game-over button {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
 .game-canvas canvas {
   display: block;
 }
