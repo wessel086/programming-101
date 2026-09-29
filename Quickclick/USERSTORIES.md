@@ -126,10 +126,10 @@ Een klik buiten een target trekt 2 seconden van de timer af. Dit wordt bijgehoud
 
 Het target verdwijnt automatisch na zijn maximale tijd op het scherm. Bij het verdwijnen gaan er 2 seconden van de timer af. Dit geldt voor alle target types.
 
-- [ ] **Visuele reactie bij klikken**
+- [v] **Visuele reactie bij klikken**
       Als gebruiker wil ik een visuele reactie zien als ik een target raak of mis, zodat ik direct weet of mijn klik goed was.
 
-Bij een raak wordt kort een kleurverandering of animatie getoond op de plek van het target. Bij een miss wordt kort een visueel effect getoond op de klikpositie. De feedback duurt maximaal 0.5 seconde.
+Bij een raak verschijnt kort een groen rondje op de plek van het target. Bij een miss verschijnt kort een rood rondje op de klikplek. De feedback duurt maximaal 0.5 seconde.
 
 ---
 

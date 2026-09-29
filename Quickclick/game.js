@@ -19,6 +19,7 @@ const targets = [];
 const normalTargetLifetime = 5000;
 const timeTargetLifetime = 3000;
 const goldTargetLifetime = 3000;
+let clickFeedback = null;
 
 // Berekent de targetgrootte op basis van het scherm en maakt targets kleiner in level 4.
 function updateTargetDiameter() {
@@ -166,6 +167,12 @@ function draw() {
     circle(target.x, target.y, targetDiameter);
   }
 
+  // Toont 0,3 seconde een groen rondje bij raak of rood rondje bij mis.
+  if (clickFeedback && millis() - clickFeedback.time < 300) {
+    fill(clickFeedback.color);
+    circle(clickFeedback.x, clickFeedback.y, 20);
+  }
+
   fillTargetSlots();
 }
 
@@ -191,6 +198,12 @@ function mousePressed() {
         score += 5;
         scoreDisplay.textContent = `Score: ${score}`;
       }
+      clickFeedback = {
+        x: target.x,
+        y: target.y,
+        color: "green",
+        time: millis(),
+      };
       targets.splice(index, 1);
       fillTargetSlots();
       hitTarget = true;
@@ -199,6 +212,12 @@ function mousePressed() {
   }
 
   if (!hitTarget) {
+    clickFeedback = {
+      x: mouseX,
+      y: mouseY,
+      color: "red",
+      time: millis(),
+    };
     subtractTime(2);
   }
 }
