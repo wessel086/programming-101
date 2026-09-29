@@ -3,6 +3,9 @@ const levelDisplay = document.querySelector(".level");
 const scoreDisplay = document.querySelector(".score");
 const timerDisplay = document.querySelector(".timer");
 const countdownDisplay = document.querySelector(".countdown");
+const gameOverDisplay = document.querySelector(".game-over");
+const finalScoreDisplay = document.querySelector(".final-score");
+const finalHighscoreDisplay = document.querySelector(".final-highscore");
 const savedLevel = localStorage.getItem("qc_level") || "1";
 
 // Toont het level dat de speler op de startpagina heeft gekozen.
@@ -13,6 +16,7 @@ let score = 0;
 let timeLeft = 30;
 let timerInterval;
 let gameStarted = false;
+let gameOver = false;
 let targetDiameter;
 const maxTargets = 5;
 const targets = [];
@@ -71,24 +75,45 @@ function addTime(seconds) {
   updateTimerDisplay();
 }
 
+// Stopt het spel en toont de eindscore en de nieuwe highscore.
+function finishGame() {
+  if (gameOver) {
+    return;
+  }
+
+  gameOver = true;
+  gameStarted = false;
+  clearInterval(timerInterval);
+
+  let highscore = Number(localStorage.getItem("qc_highscore")) || 0;
+  if (score > highscore) {
+    highscore = score;
+    localStorage.setItem("qc_highscore", highscore);
+  }
+
+  finalScoreDisplay.textContent = `Score: ${score}`;
+  finalHighscoreDisplay.textContent = `Highscore: ${highscore}`;
+  gameOverDisplay.hidden = false;
+}
+
 // Haalt seconden van de timer af, zonder dat de tijd onder nul komt.
 function subtractTime(seconds) {
   timeLeft = Math.max(0, timeLeft - seconds);
   updateTimerDisplay();
 
   if (timeLeft === 0) {
-    clearInterval(timerInterval);
+    finishGame();
   }
 }
 
 // Laat de timer elke seconde één seconde aftellen.
 function startTimer() {
   timerInterval = setInterval(() => {
-    timeLeft -= 1;
+    timeLeft = Math.max(0, timeLeft - 1);
     updateTimerDisplay();
 
     if (timeLeft === 0) {
-      clearInterval(timerInterval);
+      finishGame();
     }
   }, 1000);
 }
@@ -138,6 +163,10 @@ function setup() {
 
 // Tekent elk frame de targets en verwijdert targets die te lang zijn blijven staan.
 function draw() {
+  if (gameOver) {
+    return;
+  }
+
   background(24);
   noStroke();
 
@@ -151,9 +180,12 @@ function draw() {
       lifetime = goldTargetLifetime;
     }
 
-    if (millis() - target.spawnedAt >= lifetime) {
+    if (gameStarted && millis() - target.spawnedAt >= lifetime) {
       targets.splice(index, 1);
       subtractTime(2);
+      if (gameOver) {
+        return;
+      }
       continue;
     }
 
@@ -173,7 +205,9 @@ function draw() {
     circle(clickFeedback.x, clickFeedback.y, 20);
   }
 
-  fillTargetSlots();
+  if (!gameOver) {
+    fillTargetSlots();
+  }
 }
 
 // Controleert of de speler een target raakt en geeft de bijbehorende beloning.

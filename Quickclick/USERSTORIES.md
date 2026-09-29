@@ -135,7 +135,7 @@ Bij een raak verschijnt kort een groen rondje op de plek van het target. Bij een
 
 ## 7. JavaScript: Game Over
 
-- [ ] **Game over scherm**
+- [v] **Game over scherm**
       Als gebruiker wil ik dat wanneer de timer op 00:00 staat, het game over scherm verschijnt.
 
 Het game over scherm verschijnt direct als de timer 00:00 bereikt. De eindscore en de highscore zijn zichtbaar op het game over scherm, zodat de speler direct ziet of hij een record heeft gehaald. De game stopt volledig en er kunnen geen targets meer geklikt worden.
