@@ -133,6 +133,7 @@ function startGame() {
 // Telt vijf seconden af en start daarna het spel.
 function startCountdown() {
   let countdown = 5;
+  countdownDisplay.hidden = false;
   updateTimerDisplay();
 
   const countdownInterval = setInterval(() => {
@@ -146,11 +147,13 @@ function startCountdown() {
     clearInterval(countdownInterval);
     countdownDisplay.textContent = "Start!";
     startGame();
-    setTimeout(() => countdownDisplay.remove(), 500);
+    setTimeout(() => {
+  countdownDisplay.hidden = true;
+}, 500);
   }, 1000);
 }
 
-startCountdown();
+startCountdown()
 
 // Maakt het canvas en vult het begin van het spel met targets.
 function setup() {
