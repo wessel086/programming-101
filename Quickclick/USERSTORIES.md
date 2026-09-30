@@ -154,7 +154,7 @@ De knop "Menu" is zichtbaar op het game over scherm. Klikken op "Menu" brengt de
 
 ## 8. JavaScript: Levels
 
-- [ ] **Level 1**
+- [v] **Level 1**
       Als gebruiker wil ik dat in level 1 de targets de standaard snelheid hebben.
 
 Normaal target staat 5 seconden op het scherm. Time target staat 3 seconden op het scherm. Gold target staat 3 seconden op het scherm.

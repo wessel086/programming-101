@@ -22,9 +22,11 @@ let gameOver = false;
 let targetDiameter;
 const maxTargets = 5;
 const targets = [];
-const normalTargetLifetime = 5000;
-const timeTargetLifetime = 3000;
-const goldTargetLifetime = 3000;
+const targetLifetimes = {
+  normal: 5000,
+  time: 3000,
+  gold: 3000,
+};
 let clickFeedback = null;
 
 // Berekent de targetgrootte op basis van het scherm en maakt targets kleiner in level 4.
@@ -200,15 +202,10 @@ function draw() {
   background(24);
   noStroke();
 
-  // Normale targets verdwijnen na vijf seconden; time targets na drie seconden.
+  // Level 1 gebruikt de standaard levensduur per targettype.
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
-    let lifetime = normalTargetLifetime;
-    if (target.type === "time") {
-      lifetime = timeTargetLifetime;
-    } else if (target.type === "gold") {
-      lifetime = goldTargetLifetime;
-    }
+    const lifetime = targetLifetimes[target.type];
 
     if (gameStarted && millis() - target.spawnedAt >= lifetime) {
       targets.splice(index, 1);
