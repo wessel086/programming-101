@@ -218,6 +218,10 @@ main {
   pointer-events: none;
 }
 
+.countdown[hidden] {
+  display: none;
+}
+
 .game-over {
   position: absolute;
   z-index: 2;
