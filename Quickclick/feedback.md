@@ -1,0 +1,5 @@
+# Feedback van Pim Van Dam
+
+**Datum:** 30/09/2026
+
+Hoi Wessel, ziet er goed uit! Om de opmaak van je game wat mooier te maken kan je bijvoorbeeld van de boxen ‘controls’, ‘Previous scores’, etc. een border-radius gebruiken zodat ze wat minder hoekig lijken want nu ziet het er misschien nog een beetje simpel uit. Dit zou je ook nog kunnen doen bij de laatste screenshot en dan de buttons opnieuw en menu. Je zou ook nog wat meer kleur kunnen toevoegen, dat je met veel kleuren werkt, zo kan je bijv. de ‘Start game’ knop vel groen maken zodat je duidelijker ziet van hier kan je de game starten en nodigt dat het ook meer uit. Dit kan je ook toepassen bij de 3e screenshot bij de andere buttons door bijv. de button 'opnieuw' rood te maken. Wat de opmaak ook veel verbeterd is door icoontjes toe te voegen door bijv. bij previous scores een icoon erbij te zetten van een beker. Dit zou je natuurlijk ook kunnen doen bij de 2e screenshot en dan boven in bij ‘Time’ en ’Try’. Verder ziet het er leuk uit met bonussen en de controls, en dat je je previous scores kan zien. Goed gemaakt!
