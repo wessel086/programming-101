@@ -22,11 +22,14 @@ let gameOver = false;
 let targetDiameter;
 const maxTargets = 5;
 const targets = [];
-const targetLifetimes = {
-  normal: 5000,
-  time: 3000,
-  gold: 3000,
+const targetLifetimesByLevel = {
+  1: { normal: 5000, time: 3000, gold: 3000 },
+  2: { normal: 4000, time: 2000, gold: 2000 },
+  3: { normal: 3000, time: 1000, gold: 1000 },
+  4: { normal: 3000, time: 1000, gold: 1000 },
 };
+const targetLifetimes =
+  targetLifetimesByLevel[savedLevel] || targetLifetimesByLevel[1];
 let clickFeedback = null;
 
 // Berekent de targetgrootte op basis van het scherm en maakt targets kleiner in level 4.
@@ -188,6 +191,7 @@ startCountdown();
 function setup() {
   const canvas = createCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
   canvas.parent(canvasArea);
+  canvas.elt.addEventListener("contextmenu", (event) => event.preventDefault());
 
   updateTargetDiameter();
   fillTargetSlots();
@@ -202,7 +206,7 @@ function draw() {
   background(24);
   noStroke();
 
-  // Level 1 gebruikt de standaard levensduur per targettype.
+  // De levensduur hangt af van het gekozen level en targettype.
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
     const lifetime = targetLifetimes[target.type];
@@ -245,30 +249,33 @@ function mousePressed() {
 
   let hitTarget = false;
 
-  for (let index = targets.length - 1; index >= 0; index -= 1) {
-    const target = targets[index];
-    const distance = dist(mouseX, mouseY, target.x, target.y);
+  const isValidClick = savedLevel !== "4" || mouseButton === LEFT;
+  if (isValidClick) {
+    for (let index = targets.length - 1; index >= 0; index -= 1) {
+      const target = targets[index];
+      const distance = dist(mouseX, mouseY, target.x, target.y);
 
-    if (distance < targetDiameter / 2) {
-      if (target.type === "normal") {
-        score += 1;
-        scoreDisplay.textContent = `Score: ${score}`;
-      } else if (target.type === "time") {
-        addTime(3);
-      } else if (target.type === "gold") {
-        score += 5;
-        scoreDisplay.textContent = `Score: ${score}`;
+      if (distance < targetDiameter / 2) {
+        if (target.type === "normal") {
+          score += 1;
+          scoreDisplay.textContent = `Score: ${score}`;
+        } else if (target.type === "time") {
+          addTime(3);
+        } else if (target.type === "gold") {
+          score += 5;
+          scoreDisplay.textContent = `Score: ${score}`;
+        }
+        clickFeedback = {
+          x: target.x,
+          y: target.y,
+          color: "green",
+          time: millis(),
+        };
+        targets.splice(index, 1);
+        fillTargetSlots();
+        hitTarget = true;
+        break;
       }
-      clickFeedback = {
-        x: target.x,
-        y: target.y,
-        color: "green",
-        time: millis(),
-      };
-      targets.splice(index, 1);
-      fillTargetSlots();
-      hitTarget = true;
-      break;
     }
   }
 

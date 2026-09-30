@@ -159,17 +159,17 @@ De knop "Menu" is zichtbaar op het game over scherm. Klikken op "Menu" brengt de
 
 Normaal target staat 5 seconden op het scherm. Time target staat 3 seconden op het scherm. Gold target staat 3 seconden op het scherm.
 
-- [ ] **Level 2**
+- [v] **Level 2**
       Als gebruiker wil ik dat in level 2 alle targets 1 seconde korter op het scherm staan dan standaard.
 
 Normaal target staat 4 seconden op het scherm. Time target staat 2 seconden op het scherm. Gold target staat 2 seconden op het scherm.
 
-- [ ] **Level 3**
+- [v] **Level 3**
       Als gebruiker wil ik dat in level 3 alle targets 2 seconden korter op het scherm staan dan standaard.
 
 Normaal target staat 3 seconden op het scherm. Time target staat 1 seconde op het scherm. Gold target staat 1 seconde op het scherm.
 
-- [ ] **Level 4**
+- [v] **Level 4**
       Als gebruiker wil ik dat in level 4 alle targets 2 seconden korter staan, 40% kleiner zijn en alleen met de linkermuisknop geklikt kunnen worden.
 
 Alle tijden zijn gelijk aan level 3. Alle targets zijn 40% kleiner dan de standaard diameter. Alleen een klik met de linkermuisknop telt als een geldige klik. Een klik met de rechtermuisknop telt als een miss.
