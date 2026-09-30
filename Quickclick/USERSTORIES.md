@@ -145,10 +145,10 @@ Het game over scherm verschijnt direct als de timer 00:00 bereikt. De eindscore 
 
 De knop "Opnieuw" is zichtbaar op het game over scherm. Klikken op "Opnieuw" herstart het huidige level. De score en timer worden gereset naar de beginwaarden.
 
-- [ ] **Terug naar menu**
+- [v] **Terug naar menu**
       Als gebruiker wil ik op het game over scherm een knop "Menu" zien die mij terugbrengt naar het homescherm.
 
-De knop "Menu" is zichtbaar op het game over scherm. Klikken op "Menu" brengt de gebruiker terug naar index.html. De game stopt volledig bij het klikken op "Menu".
+De knop "Menu" is zichtbaar op het game over scherm. Klikken op "Menu" brengt de gebruiker terug naar Home.html. De game stopt volledig bij het klikken op "Menu".
 
 ---
 

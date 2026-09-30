@@ -7,6 +7,7 @@ const gameOverDisplay = document.querySelector(".game-over");
 const finalScoreDisplay = document.querySelector(".final-score");
 const finalHighscoreDisplay = document.querySelector(".final-highscore");
 const restartButton = document.querySelector(".restart-button");
+const menuButton = document.querySelector(".menu-button");
 const savedLevel = localStorage.getItem("qc_level") || "1";
 
 // Toont het level dat de speler op de startpagina heeft gekozen.
@@ -173,6 +174,12 @@ function restartGame() {
 }
 
 restartButton.addEventListener("click", restartGame);
+menuButton.addEventListener("click", () => {
+  clearInterval(timerInterval);
+  gameStarted = false;
+  gameOver = true;
+  window.location.href = "Home.html";
+});
 startCountdown();
 
 // Maakt het canvas en vult het begin van het spel met targets.
