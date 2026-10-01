@@ -56,6 +56,10 @@ main {
   box-shadow: 0 12px 30px rgb(0 0 0 / 20%);
 }
 
+.muis {
+  max-width: 30%;
+}
+
 .info-panel h2 {
   margin-top: 0;
 }
