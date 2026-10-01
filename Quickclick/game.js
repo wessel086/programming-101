@@ -56,6 +56,7 @@ function setRandomTargetPosition() {
 
   return { x: randomX, y: randomY, type, spawnedAt: millis() };
 }
+
 // Maakt één target en voegt het toe aan de lijst met actieve targets.
 function spawnTarget() {
   targets.push(setRandomTargetPosition());
@@ -72,7 +73,9 @@ function fillTargetSlots() {
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  timerDisplay.html(
+    `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+  );
 }
 
 // Geeft seconden bij de timer op en werkt de weergave meteen bij.
@@ -91,19 +94,20 @@ function finishGame() {
   gameStarted = false;
   clearInterval(timerInterval);
 
-  let highscore = Number(localStorage.getItem("qc_highscore")) || 0;
+  let highscore = Number(getItem("qc_highscore")) || 0;
   if (score > highscore) {
     highscore = score;
-    localStorage.setItem("qc_highscore", highscore);
+    storeItem("qc_highscore", highscore);
   }
 
-  const scores = JSON.parse(localStorage.getItem("qc_previous_scores") || "[]");
-  scores.unshift({ name: localStorage.getItem("qc_name")?.trim() || "Anoniem", score, level: savedLevel });
-  localStorage.setItem("qc_previous_scores", JSON.stringify(scores.slice(0, 10)));
+  const scores = JSON.parse(getItem("qc_previous_scores") || "[]");
+  const name = (getItem("qc_name") || "").trim() || "Anoniem";
+  scores.unshift({ name, score, level: savedLevel });
+  storeItem("qc_previous_scores", JSON.stringify(scores.slice(0, 10)));
 
-  finalScoreDisplay.textContent = `Score: ${score}`;
-  finalHighscoreDisplay.textContent = `Highscore: ${highscore}`;
-  gameOverDisplay.hidden = false;
+  finalScoreDisplay.html(`Score: ${score}`);
+  finalHighscoreDisplay.html(`Highscore: ${highscore}`);
+  gameOverDisplay.show();
 }
 
 // Haalt seconden van de timer af, zonder dat de tijd onder nul komt.
