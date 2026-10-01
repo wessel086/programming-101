@@ -69,9 +69,9 @@ quick-click/
 
 Uitgevoerd door: **Pim Van Dam**
 
-- [x] Start de demo: werkt het zonder console-errors?
-- [x] Interactie: doen beide acties wat ze moeten doen?
-- [x] Variabelen/loops/functions/arrays/if's aanwezig en functioneel?
-- [x] Code leesbaar: namen duidelijk, geen duplicatie, geen dode code?
-- [x] Performance: geen zware berekeningen in draw() zonder noodzaak?
-- [x] README compleet; credits voor externe assets staan erbij?
+- [v] Start de demo: werkt het zonder console-errors?
+- [v] Interactie: doen beide acties wat ze moeten doen?
+- [v] Variabelen/loops/functions/arrays/if's aanwezig en functioneel?
+- [v] Code leesbaar: namen duidelijk, geen duplicatie, geen dode code?
+- [v] Performance: geen zware berekeningen in draw() zonder noodzaak?
+- [v] README compleet; credits voor externe assets staan erbij?
