@@ -13,6 +13,8 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* Homepagina header */
+
 .page-header {
   padding: 20px;
   border-bottom: 1px solid #555;
@@ -27,6 +29,8 @@ body {
 .page-header p {
   margin: 0;
 }
+
+/* Homepagina layout */
 
 main {
   display: flex;
@@ -50,6 +54,8 @@ main {
   align-items: center;
   justify-content: center;
 }
+
+/* Info- en startpanelen */
 
 .info-panel,
 .start-screen {
@@ -89,6 +95,8 @@ main {
 .gold-dot { background-color: gold; }
 .green-dot { background-color: green; }
 .gray-dot { background-color: gray; }
+
+/* Startscherm */
 
 .start-screen {
   display: flex;
@@ -160,6 +168,8 @@ main {
   text-align: center;
 }
 
+/* Scorepaneel */
+
 .score-panel {
   min-height: 460px;
 }
@@ -171,12 +181,16 @@ main {
   text-align: center;
 }
 
+/* Footer */
+
 .page-footer {
   padding: 16px;
   border-top: 1px solid #555;
   color: #bbb;
   text-align: center;
 }
+
+/* Responsive homepagina */
 
 @media (max-width: 700px) {
   main {
@@ -187,6 +201,8 @@ main {
     order: -1;
   }
 }
+
+/* Gamepagina layout */
 
 .game-body {
   min-height: 100vh;
@@ -224,6 +240,8 @@ main {
   padding: 0;
 }
 
+/* Canvas */
+
 .game-canvas {
   position: relative;
   width: 100%;
@@ -231,11 +249,17 @@ main {
   background-color: #181818;
 }
 
+.game-canvas canvas {
+  display: block;
+}
+
+/* Countdown */
+
 .countdown {
   position: absolute;
   z-index: 1;
   inset: 0;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   background-color: rgb(0 0 0 / 55%);
@@ -244,24 +268,18 @@ main {
   pointer-events: none;
 }
 
-.countdown[hidden] {
-  display: none;
-}
+/* Game-over scherm */
 
 .game-over {
   position: absolute;
   z-index: 2;
   inset: 0;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: rgb(0 0 0 / 85%);
   font-size: 28px;
-}
-
-.game-over[hidden] {
-  display: none;
 }
 
 .game-over h1,
@@ -296,9 +314,7 @@ main {
   background-color: #3970d8;
 }
 
-.game-canvas canvas {
-  display: block;
-}
+/* Responsive gamepagina */
 
 @media (max-width: 600px) {
   .game-header {
