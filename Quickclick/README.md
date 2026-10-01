@@ -32,7 +32,7 @@ Een browsergebaseerde reactiegame gebouwd met HTML, CSS en JavaScript. Klik zo s
 
 1. Clone de repository:
    ```
-   git clone <jouw-gitlab-url>
+   git clone <https://gitlab.fdmci.hva.nl/propedeuse/projecten/2026-2027/out-d/programming-101/programming-101-van-wessel-kaldenbach>
    ```
 2. Open `Home.html` in je browser (geen server nodig).
 3. Voer je naam in, kies een level en klik op **Start game**.
@@ -61,7 +61,8 @@ quick-click/
 | Bron | Gebruik |
 |---|---|
 | [p5.js](https://p5js.org/) via CDN | Canvas rendering en game loop |
-| `fotos/muis.png` | Eigen afbeelding, controls-uitleg op homepagina |
+| `fotos/muis.png` | Fecteezy, controls-uitleg op homepagina |
+| 'fotos/crosshair.png' | https://www.citypng.com/photo/20168/red-crosshair-icon-transparent-background |
 
 ---
 
