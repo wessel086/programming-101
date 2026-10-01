@@ -1,10 +1,14 @@
+html {
+  background-color: #010461;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background-color: #101010;
+  background: linear-gradient(to bottom, #171b43, #010461);
   color: white;
   font-family: Arial, sans-serif;
 }
@@ -60,7 +64,6 @@ main {
   max-width: 40%;
   float: right;
   margin-bottom: 5px;
-  border: 5px solid #00084b;
 }
 
 .info-panel h2 {
