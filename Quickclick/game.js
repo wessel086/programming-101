@@ -1,17 +1,17 @@
-const canvasArea = document.querySelector(".game-canvas");
-const levelDisplay = document.querySelector(".level");
-const scoreDisplay = document.querySelector(".score");
-const timerDisplay = document.querySelector(".timer");
-const countdownDisplay = document.querySelector(".countdown");
-const gameOverDisplay = document.querySelector(".game-over");
-const finalScoreDisplay = document.querySelector(".final-score");
-const finalHighscoreDisplay = document.querySelector(".final-highscore");
-const restartButton = document.querySelector(".restart-button");
-const menuButton = document.querySelector(".menu-button");
-const savedLevel = localStorage.getItem("qc_level") || "1";
+const canvasArea = select(".game-canvas");
+const levelDisplay = select(".level");
+const scoreDisplay = select(".score");
+const timerDisplay = select(".timer");
+const countdownDisplay = select(".countdown");
+const gameOverDisplay = select(".game-over");
+const finalScoreDisplay = select(".final-score");
+const finalHighscoreDisplay = select(".final-highscore");
+const restartButton = select(".restart-button");
+const menuButton = select(".menu-button");
+const savedLevel = getItem("qc_level") || "1";
 
 // Toont het level dat de speler op de startpagina heeft gekozen.
-levelDisplay.textContent = savedLevel;
+levelDisplay.html(savedLevel);
 
 // Bewaart de score, tijd, targets en instellingen die tijdens het spel veranderen.
 let score = 0;
@@ -56,7 +56,6 @@ function setRandomTargetPosition() {
 
   return { x: randomX, y: randomY, type, spawnedAt: millis() };
 }
-
 // Maakt één target en voegt het toe aan de lijst met actieve targets.
 function spawnTarget() {
   targets.push(setRandomTargetPosition());
