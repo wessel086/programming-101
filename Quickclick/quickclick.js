@@ -1,71 +1,79 @@
-const nameInput = document.querySelector(".name-input");
-const levelButtons = document.querySelectorAll(".level-btn");
-const startButton = document.querySelector(".start-btn");
-
-// --- Save name while typing ---
-nameInput.addEventListener("input", () => {
-  localStorage.setItem("qc_name", nameInput.value);
-});
-
-// --- Load saved name when the page opens ---
-const savedName = localStorage.getItem("qc_name");
-if (savedName) {
-  nameInput.value = savedName;
-}
-
+// Selectors — worden ingesteld in setup().
+let nameInput;
+let startButton;
+let highscoreElement;
+let scorePanel;
 let selectedLevel = null;
 
-levelButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    levelButtons.forEach((levelButton) => {
-      levelButton.classList.remove("selected");
-      levelButton.setAttribute("aria-pressed", "false");
-    });
+// Werkt de highscoretekst bij op de pagina.
+function updateHighscoreDisplay() {
+  const highscore = getItem("qc_highscore") ?? 0;
+  highscoreElement.html("Highscore: " + highscore);
+}
 
-    button.classList.add("selected");
-    button.setAttribute("aria-pressed", "true");
-    selectedLevel = button.dataset.level;
-    startButton.disabled = false;
+// Markeert het gekozen level en maakt de startknop klikbaar.
+function selectLevel(button) {
+  selectAll(".level-btn").forEach((levelButton) => {
+    levelButton.removeClass("selected");
+    levelButton.attribute("aria-pressed", "false");
   });
-});
 
-startButton.addEventListener("click", () => {
-  if (selectedLevel === null) {
+  button.addClass("selected");
+  button.attribute("aria-pressed", "true");
+  selectedLevel = button.attribute("data-level");
+  startButton.removeAttribute("disabled");
+}
+
+// Toont de laatste tien scores in het scorepaneel.
+function fillScorePanel() {
+  const scores = getItem("qc_previous_scores") ?? [];
+  if (scores.length === 0) {
     return;
   }
 
-  localStorage.setItem("qc_level", selectedLevel);
-  window.location.href = "game.html";
-});
+  select(".panel-empty").remove();
 
-// --- Highscore and update logic ---
-const highscoreElement = document.querySelector(".highscore");
-
-function displayHighscore() {
-  const highscore = localStorage.getItem("qc_highscore") || 0;
-  highscoreElement.textContent = `Highscore: ${highscore}`;
-}
-
-function updateHighscoreIfHigher(newScore) {
-  const currentHighscore = parseInt(localStorage.getItem("qc_highscore")) || 0;
-  if (newScore > currentHighscore) {
-    localStorage.setItem("qc_highscore", newScore);
-  }
-  displayHighscore();
-}
-
-displayHighscore();
-
-// --- Toon de laatst gespeelde scores ---
-const scorePanel = document.querySelector(".score-panel");
-const scores = JSON.parse(localStorage.getItem("qc_previous_scores") || "[]");
-if (scores.length) {
-  scorePanel.querySelector(".panel-empty").remove();
-  const list = document.createElement("ol");
+  const list = createElement("ol");
   scores.forEach(({ name, score, level }) => {
-    const item = document.createElement("li");
-    item.textContent = `${name} | Level ${level} | ${score} punten`;
-    list.append(item);
+    const item = createElement("li", name + " | Level " + level + " | " + score + " punten");
+    item.parent(list);
   });
-  scorePanel.append(list);
+
+  list.parent(scorePanel);
+}
+
+// Zet alles klaar zodra p5.js is opgestart.
+function setup() {
+  noCanvas();
+
+  nameInput = select(".name-input");
+  startButton = select(".start-btn");
+  highscoreElement = select(".highscore");
+  scorePanel = select(".score-panel");
+
+  // Laad opgeslagen naam.
+  const savedName = getItem("qc_name") ?? "";
+  nameInput.value(savedName);
+
+  // Sla naam op terwijl de speler typt.
+  nameInput.input(() => {
+    storeItem("qc_name", nameInput.value());
+  });
+
+  // Koppel levelknoppen.
+  selectAll(".level-btn").forEach((button) => {
+    button.mouseClicked(() => selectLevel(button));
+  });
+
+  // Koppel startknop.
+  startButton.mouseClicked(() => {
+    if (selectedLevel === null) {
+      return;
+    }
+    storeItem("qc_level", selectedLevel);
+    window.location.href = "game.html";
+  });
+
+  updateHighscoreDisplay();
+  fillScorePanel();
 }

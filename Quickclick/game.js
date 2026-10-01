@@ -1,25 +1,29 @@
-const canvasArea = select(".game-canvas");
-const levelDisplay = select(".level");
-const scoreDisplay = select(".score");
-const timerDisplay = select(".timer");
-const countdownDisplay = select(".countdown");
-const gameOverDisplay = select(".game-over");
-const finalScoreDisplay = select(".final-score");
-const finalHighscoreDisplay = select(".final-highscore");
-const restartButton = select(".restart-button");
-const menuButton = select(".menu-button");
-const savedLevel = getItem("qc_level") || "1";
-
-// Toont het level dat de speler op de startpagina heeft gekozen.
-levelDisplay.html(savedLevel);
+// Selectors en opgeslagen waarden — worden ingesteld in setup().
+let canvasArea;
+let levelDisplay;
+let scoreDisplay;
+let timerDisplay;
+let countdownDisplay;
+let gameOverDisplay;
+let finalScoreDisplay;
+let finalHighscoreDisplay;
+let restartButton;
+let menuButton;
+let savedLevel;
+let targetLifetimes;
 
 // Bewaart de score, tijd, targets en instellingen die tijdens het spel veranderen.
 let score = 0;
 let timeLeft = 30;
-let timerInterval;
 let gameStarted = false;
 let gameOver = false;
 let targetDiameter;
+let clickFeedback = null;
+let lastSecond = 0;
+let countdownValue = 0;
+let countdownStartTime = 0;
+let countingDown = false;
+
 const maxTargets = 5;
 const targets = [];
 const targetLifetimesByLevel = {
@@ -28,15 +32,11 @@ const targetLifetimesByLevel = {
   3: { normal: 3000, time: 1000, gold: 1000 },
   4: { normal: 3000, time: 1000, gold: 1000 },
 };
-const targetLifetimes =
-  targetLifetimesByLevel[savedLevel] || targetLifetimesByLevel[1];
-let clickFeedback = null;
 
 // Berekent de targetgrootte op basis van het scherm en maakt targets kleiner in level 4.
 function updateTargetDiameter() {
   const standardDiameter = windowWidth * 0.1;
-  targetDiameter =
-    savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
+  targetDiameter = savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
 }
 
 // Kiest een willekeurige plek en een targettype voor een nieuw target.
@@ -74,40 +74,19 @@ function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   timerDisplay.html(
-    `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+    String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0")
   );
+}
+
+// Werkt de scoretekst bij.
+function updateScoreDisplay() {
+  scoreDisplay.html("Score: " + score);
 }
 
 // Geeft seconden bij de timer op en werkt de weergave meteen bij.
 function addTime(seconds) {
   timeLeft += seconds;
   updateTimerDisplay();
-}
-
-// Stopt het spel en toont de eindscore en de nieuwe highscore.
-function finishGame() {
-  if (gameOver) {
-    return;
-  }
-
-  gameOver = true;
-  gameStarted = false;
-  clearInterval(timerInterval);
-
-  let highscore = Number(getItem("qc_highscore")) || 0;
-  if (score > highscore) {
-    highscore = score;
-    storeItem("qc_highscore", highscore);
-  }
-
-  const scores = JSON.parse(getItem("qc_previous_scores") || "[]");
-  const name = (getItem("qc_name") || "").trim() || "Anoniem";
-  scores.unshift({ name, score, level: savedLevel });
-  storeItem("qc_previous_scores", JSON.stringify(scores.slice(0, 10)));
-
-  finalScoreDisplay.html(`Score: ${score}`);
-  finalHighscoreDisplay.html(`Highscore: ${highscore}`);
-  gameOverDisplay.show();
 }
 
 // Haalt seconden van de timer af, zonder dat de tijd onder nul komt.
@@ -120,57 +99,88 @@ function subtractTime(seconds) {
   }
 }
 
-// Laat de timer elke seconde één seconde aftellen.
-function startTimer() {
-  timerInterval = setInterval(() => {
-    timeLeft = Math.max(0, timeLeft - 1);
-    updateTimerDisplay();
+// Stopt het spel en toont de eindscore en de nieuwe highscore.
+function finishGame() {
+  if (gameOver) {
+    return;
+  }
 
-    if (timeLeft === 0) {
-      finishGame();
-    }
-  }, 1000);
+  gameOver = true;
+  gameStarted = false;
+
+  let highscore = getItem("qc_highscore") ?? 0;
+  if (score > highscore) {
+    highscore = score;
+    storeItem("qc_highscore", highscore);
+  }
+
+  const scores = getItem("qc_previous_scores") ?? [];
+  const name = (getItem("qc_name") ?? "").trim() || "Anoniem";
+  scores.unshift({ name, score, level: savedLevel });
+  storeItem("qc_previous_scores", scores.slice(0, 10));
+
+  finalScoreDisplay.html("Score: " + score);
+  finalHighscoreDisplay.html("Highscore: " + highscore);
+  gameOverDisplay.show();
+}
+
+// Telt elke seconde af via draw().
+function tickTimer() {
+  if (!gameStarted || gameOver) {
+    return;
+  }
+
+  const currentSecond = Math.floor(millis() / 1000);
+  if (currentSecond !== lastSecond) {
+    lastSecond = currentSecond;
+    subtractTime(1);
+  }
 }
 
 // Zet de score klaar en start de timer nadat de countdown is afgelopen.
 function startGame() {
   score = 0;
-  scoreDisplay.textContent = `Score: ${score}`;
-  // De levensduur begint zodra het spel start, niet tijdens de countdown.
+  updateScoreDisplay();
   for (const target of targets) {
     target.spawnedAt = millis();
   }
   gameStarted = true;
-  startTimer();
+  lastSecond = Math.floor(millis() / 1000);
 }
 
-// Telt vijf seconden af en start daarna het spel.
+// Telt vijf seconden af met millis() en start daarna het spel.
 function startCountdown() {
-  let countdown = 5;
-  countdownDisplay.textContent = countdown;
-  countdownDisplay.hidden = false;
+  countdownValue = 5;
+  countdownStartTime = millis();
+  countingDown = true;
+  countdownDisplay.html(countdownValue);
+  countdownDisplay.show();
   updateTimerDisplay();
+}
 
-  const countdownInterval = setInterval(() => {
-    countdown -= 1;
+function tickCountdown() {
+  if (!countingDown) {
+    return;
+  }
 
-    if (countdown > 0) {
-      countdownDisplay.textContent = countdown;
-      return;
-    }
+  const elapsed = Math.floor((millis() - countdownStartTime) / 1000);
+  const remaining = 5 - elapsed;
 
-    clearInterval(countdownInterval);
-    countdownDisplay.textContent = "Start!";
+  if (remaining > 0 && remaining !== countdownValue) {
+    countdownValue = remaining;
+    countdownDisplay.html(countdownValue);
+  }
+
+  if (remaining <= 0 && !gameStarted) {
+    countingDown = false;
+    countdownDisplay.html("Start!");
     startGame();
-    setTimeout(() => {
-  countdownDisplay.hidden = true;
-}, 500);
-  }, 1000);
+    setTimeout(() => countdownDisplay.hide(), 500);
+  }
 }
 
 // Zet de score en tijd terug en start hetzelfde level opnieuw.
 function restartGame() {
-  clearInterval(timerInterval);
   gameOver = false;
   gameStarted = false;
   score = 0;
@@ -178,30 +188,45 @@ function restartGame() {
   clickFeedback = null;
   targets.length = 0;
 
-  scoreDisplay.textContent = `Score: ${score}`;
+  updateScoreDisplay();
   updateTimerDisplay();
-  gameOverDisplay.hidden = true;
+  gameOverDisplay.hide();
   fillTargetSlots();
   startCountdown();
 }
 
-restartButton.addEventListener("click", restartGame);
-menuButton.addEventListener("click", () => {
-  clearInterval(timerInterval);
-  gameStarted = false;
-  gameOver = true;
-  window.location.href = "Home.html";
-});
-startCountdown();
-
-// Maakt het canvas en vult het begin van het spel met targets.
+// Maakt het canvas, koppelt de knoppen en start de countdown.
 function setup() {
-  const canvas = createCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
+  canvasArea = select(".game-canvas");
+  levelDisplay = select(".level");
+  scoreDisplay = select(".score");
+  timerDisplay = select(".timer");
+  countdownDisplay = select(".countdown");
+  gameOverDisplay = select(".game-over");
+  finalScoreDisplay = select(".final-score");
+  finalHighscoreDisplay = select(".final-highscore");
+  restartButton = select(".restart-button");
+  menuButton = select(".menu-button");
+
+  savedLevel = getItem("qc_level") ?? "1";
+  targetLifetimes = targetLifetimesByLevel[savedLevel] ?? targetLifetimesByLevel[1];
+
+  levelDisplay.html(savedLevel);
+
+  const canvas = createCanvas(canvasArea.width, canvasArea.height);
   canvas.parent(canvasArea);
   canvas.elt.addEventListener("contextmenu", (event) => event.preventDefault());
 
+  restartButton.mouseClicked(restartGame);
+  menuButton.mouseClicked(() => {
+    gameStarted = false;
+    gameOver = true;
+    window.location.href = "Home.html";
+  });
+
   updateTargetDiameter();
   fillTargetSlots();
+  startCountdown();
 }
 
 // Tekent elk frame de targets en verwijdert targets die te lang zijn blijven staan.
@@ -210,10 +235,12 @@ function draw() {
     return;
   }
 
+  tickCountdown();
+  tickTimer();
+
   background(24);
   noStroke();
 
-  // De levensduur hangt af van het gekozen level en targettype.
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
     const lifetime = targetLifetimes[target.type];
@@ -237,7 +264,6 @@ function draw() {
     circle(target.x, target.y, targetDiameter);
   }
 
-  // Toont 0,3 seconde een groen rondje bij raak of rood rondje bij mis.
   if (clickFeedback && millis() - clickFeedback.time < 300) {
     fill(clickFeedback.color);
     circle(clickFeedback.x, clickFeedback.y, 20);
@@ -265,12 +291,12 @@ function mousePressed() {
       if (distance < targetDiameter / 2) {
         if (target.type === "normal") {
           score += 1;
-          scoreDisplay.textContent = `Score: ${score}`;
+          updateScoreDisplay();
         } else if (target.type === "time") {
           addTime(3);
         } else if (target.type === "gold") {
           score += 5;
-          scoreDisplay.textContent = `Score: ${score}`;
+          updateScoreDisplay();
         }
         clickFeedback = {
           x: target.x,
@@ -299,7 +325,7 @@ function mousePressed() {
 
 // Past het canvas en de targets aan wanneer het browservenster van formaat verandert.
 function windowResized() {
-  resizeCanvas(canvasArea.clientWidth, canvasArea.clientHeight);
+  resizeCanvas(canvasArea.width, canvasArea.height);
   updateTargetDiameter();
   targets.length = 0;
   fillTargetSlots();
