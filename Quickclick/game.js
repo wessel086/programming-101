@@ -281,7 +281,7 @@ function draw() {
   }
 
   // Tekent de crosshair op de muispositie.
-  image(crosshairImg, mouseX - 16, mouseY - 16, 32, 32);
+  image(crosshairImg, mouseX - 16, mouseY - 16, 48, 48);
 }
 
 // Controleert of de speler een target raakt en geeft de bijbehorende beloning.
