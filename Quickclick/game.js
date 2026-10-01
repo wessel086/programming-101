@@ -11,6 +11,7 @@ let restartButton;
 let menuButton;
 let savedLevel;
 let targetLifetimes;
+let crosshairImg;
 
 // Bewaart de score, tijd, targets en instellingen die tijdens het spel veranderen.
 let score = 0;
@@ -195,6 +196,11 @@ function restartGame() {
   startCountdown();
 }
 
+// Laadt de crosshair afbeelding voordat het spel start.
+function preload() {
+  crosshairImg = loadImage("fotos/crosshair.png");
+}
+
 // Maakt het canvas, koppelt de knoppen en start de countdown.
 function setup() {
   canvasArea = select(".game-canvas");
@@ -224,6 +230,7 @@ function setup() {
     window.location.href = "Home.html";
   });
 
+  noCursor();
   updateTargetDiameter();
   fillTargetSlots();
   startCountdown();
@@ -272,6 +279,9 @@ function draw() {
   if (!gameOver) {
     fillTargetSlots();
   }
+
+  // Tekent de crosshair op de muispositie.
+  image(crosshairImg, mouseX - 16, mouseY - 16, 32, 32);
 }
 
 // Controleert of de speler een target raakt en geeft de bijbehorende beloning.
