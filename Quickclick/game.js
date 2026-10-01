@@ -98,6 +98,15 @@ function finishGame() {
     localStorage.setItem("qc_highscore", highscore);
   }
 
+  const previousScores = JSON.parse(localStorage.getItem("qc_previous_scores") || "[]");
+  previousScores.unshift({
+    name: localStorage.getItem("qc_name")?.trim() || "Anoniem",
+    score,
+    level: savedLevel,
+    date: new Date().toLocaleDateString("nl-NL"),
+  });
+  localStorage.setItem("qc_previous_scores", JSON.stringify(previousScores.slice(0, 10)));
+
   finalScoreDisplay.textContent = `Score: ${score}`;
   finalHighscoreDisplay.textContent = `Highscore: ${highscore}`;
   gameOverDisplay.hidden = false;

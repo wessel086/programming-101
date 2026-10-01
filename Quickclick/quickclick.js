@@ -55,3 +55,26 @@ function updateHighscoreIfHigher(newScore) {
 }
 
 displayHighscore();
+
+// --- Toon de laatst gespeelde scores ---
+const previousScoresPanel = document.querySelector(".score-panel");
+const previousScores = JSON.parse(localStorage.getItem("qc_previous_scores") || "[]");
+if (previousScores.length > 0) {
+  previousScoresPanel.querySelector(".panel-empty")?.remove();
+  const scoreList = document.createElement("ol");
+  scoreList.className = "previous-score-list";
+
+  previousScores.forEach((entry) => {
+    const item = document.createElement("li");
+    const player = document.createElement("span");
+    player.textContent = `${entry.name} — Level ${entry.level}`;
+    const result = document.createElement("strong");
+    result.textContent = `${entry.score} punten`;
+    const date = document.createElement("small");
+    date.textContent = entry.date;
+    item.append(player, result, date);
+    scoreList.append(item);
+  });
+
+  previousScoresPanel.append(scoreList);
+}
