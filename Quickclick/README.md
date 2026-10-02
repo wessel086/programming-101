@@ -63,7 +63,7 @@ quick-click/
 | [p5.js](https://p5js.org/) via CDN | Canvas rendering en game loop |
 | `fotos/muis.png` | Fecteezy, controls-uitleg op homepagina |
 | 'fotos/crosshair.png' | https://www.citypng.com/photo/20168/red-crosshair-icon-transparent-background |
-
+| geluiden/pew.wav | https://freesound.org/people/hotpin7/sounds/819682/ |
 ---
 
 ## Peer-review checklist
