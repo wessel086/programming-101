@@ -13,7 +13,7 @@ let savedLevel;
 let targetLifetimes;
 let crosshairImg;
 let clickSound;
-clickSound = loadSound("geluiden/pew.wav");
+
 // Bewaart de score, tijd, targets en instellingen die tijdens het spel veranderen.
 let score = 0;
 let timeLeft = 30;
@@ -200,6 +200,7 @@ function restartGame() {
 // Laadt de crosshair afbeelding voordat het spel start.
 function preload() {
   crosshairImg = loadImage("fotos/crosshair.png");
+  clickSound = loadSound("geluiden/pew.wav");
 }
 
 // Maakt het canvas, koppelt de knoppen en start de countdown.
