@@ -64,6 +64,7 @@ quick-click/
 | `fotos/muis.png` | Fecteezy, controls-uitleg op homepagina |
 | 'fotos/crosshair.png' | https://www.citypng.com/photo/20168/red-crosshair-icon-transparent-background |
 | geluiden/pew.wav | https://freesound.org/people/hotpin7/sounds/819682/ |
+| geluiden/miss.mp3 | https://freesound.org/people/Raclure/sounds/483598/ |
 ---
 
 ## Peer-review checklist

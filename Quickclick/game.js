@@ -13,6 +13,7 @@ let savedLevel;
 let targetLifetimes;
 let crosshairImg;
 let clickSound;
+let missSound;
 
 // Bewaart de score, tijd, targets en instellingen die tijdens het spel veranderen.
 let score = 0;
@@ -201,6 +202,7 @@ function restartGame() {
 function preload() {
   crosshairImg = loadImage("fotos/crosshair.png");
   clickSound = loadSound("geluiden/pew.wav");
+  missSound = loadSound("geluiden/miss.mp3");
 }
 
 // Maakt het canvas, koppelt de knoppen en start de countdown.
@@ -324,16 +326,17 @@ function mousePressed() {
       }
     }
   }
+}
 
-  if (!hitTarget) {
-    clickFeedback = {
-      x: mouseX,
-      y: mouseY,
-      color: "red",
-      time: millis(),
-    };
-    subtractTime(2);
-  }
+if (!hitTarget) {
+  missSound.play();
+  clickFeedback = {
+    x: mouseX,
+    y: mouseY,
+    color: "red",
+    time: millis(),
+  };
+  subtractTime(2);
 }
 
 // Past het canvas en de targets aan wanneer het browservenster van formaat verandert.
