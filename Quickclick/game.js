@@ -161,6 +161,7 @@ function startCountdown() {
   updateTimerDisplay();
 }
 
+// Werkt de countdown bij en start het spel als de countdown voorbij is.
 function tickCountdown() {
   if (!countingDown) {
     return;
@@ -240,18 +241,8 @@ function setup() {
   startCountdown();
 }
 
-// Tekent elk frame de targets en verwijdert targets die te lang zijn blijven staan.
-function draw() {
-  if (gameOver) {
-    return;
-  }
-
-  tickCountdown();
-  tickTimer();
-
-  background(24);
-  noStroke();
-
+// Verwijdert verlopen targets en tekent alle actieve targets.
+function drawTargets() {
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
     const lifetime = targetLifetimes[target.type];
@@ -274,18 +265,41 @@ function draw() {
     fill(targetColor);
     circle(target.x, target.y, targetDiameter);
   }
+}
 
+// Tekent een klein rondje op de plek waar de speler heeft geklikt.
+function drawClickFeedback() {
   if (clickFeedback && millis() - clickFeedback.time < 300) {
     fill(clickFeedback.color);
     circle(clickFeedback.x, clickFeedback.y, 20);
   }
+}
+
+// Tekent de crosshair op de huidige muispositie.
+function drawCrosshair() {
+  image(crosshairImg, mouseX - 16, mouseY - 16, 48, 48);
+}
+
+// Tekent elk frame de achtergrond, targets, feedback en crosshair.
+function draw() {
+  if (gameOver) {
+    return;
+  }
+
+  tickCountdown();
+  tickTimer();
+
+  background(24);
+  noStroke();
+
+  drawTargets();
 
   if (!gameOver) {
     fillTargetSlots();
   }
 
-  // Tekent de crosshair op de muispositie.
-  image(crosshairImg, mouseX - 16, mouseY - 16, 48, 48);
+  drawClickFeedback();
+  drawCrosshair();
 }
 
 // Controleert of de speler een target raakt en geeft de bijbehorende beloning.
@@ -327,16 +341,16 @@ function mousePressed() {
     }
   }
 
-if (!hitTarget) {
-  missSound.play();
-  clickFeedback = {
-    x: mouseX,
-    y: mouseY,
-    color: "red",
-    time: millis(),
-  };
-  subtractTime(2);
-}
+  if (!hitTarget) {
+    missSound.play();
+    clickFeedback = {
+      x: mouseX,
+      y: mouseY,
+      color: "red",
+      time: millis(),
+    };
+    subtractTime(2);
+  }
 }
 
 // Past het canvas en de targets aan wanneer het browservenster van formaat verandert.
