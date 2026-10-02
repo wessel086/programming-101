@@ -326,7 +326,6 @@ function mousePressed() {
       }
     }
   }
-}
 
 if (!hitTarget) {
   missSound.play();
@@ -337,6 +336,7 @@ if (!hitTarget) {
     time: millis(),
   };
   subtractTime(2);
+}
 }
 
 // Past het canvas en de targets aan wanneer het browservenster van formaat verandert.
