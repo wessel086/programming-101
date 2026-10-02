@@ -34,12 +34,11 @@ function fillScorePanel() {
   select(".panel-empty").remove();
 
   const list = createElement("ol");
-  scores.forEach(({ name, score, level }) => {
-    const item = createElement("li", name + " | Level " + level + " | " + score + " punten");
-    item.parent(list);
-  });
-
   list.parent(scorePanel);
+
+  scores.forEach(({ name, score, level }) => {
+    createElement("li", name + " | Level " + level + " | " + score + " punten").parent(list);
+  });
 }
 
 // Zet alles klaar zodra p5.js is opgestart.
