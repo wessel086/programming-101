@@ -289,7 +289,6 @@ function draw() {
 // Controleert of de speler een target raakt en geeft de bijbehorende beloning.
 function mousePressed() {
   if (!gameStarted) {
-    clickSound.play();
     return;
   }
 
@@ -302,6 +301,7 @@ function mousePressed() {
       const distance = dist(mouseX, mouseY, target.x, target.y);
 
       if (distance < targetDiameter / 2) {
+        clickSound.play();
         if (target.type === "normal") {
           score += 1;
           updateScoreDisplay();
