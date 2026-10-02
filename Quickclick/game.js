@@ -12,7 +12,8 @@ let menuButton;
 let savedLevel;
 let targetLifetimes;
 let crosshairImg;
-
+let clickSound;
+clickSound = loadSound("geluiden/pew.wav");
 // Bewaart de score, tijd, targets en instellingen die tijdens het spel veranderen.
 let score = 0;
 let timeLeft = 30;
@@ -287,6 +288,7 @@ function draw() {
 // Controleert of de speler een target raakt en geeft de bijbehorende beloning.
 function mousePressed() {
   if (!gameStarted) {
+    clickSound.play();
     return;
   }
 
