@@ -1,42 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Tekenset instellen op UTF-8 zodat speciale tekens goed worden weergegeven -->
     <meta charset="UTF-8">
+    <!-- Zorgt dat de pagina goed schaalt op mobiele schermen -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Click - Game</title>
+    <!-- Koppeling naar het externe CSS-bestand -->
     <link rel="stylesheet" href="Styleqc.css">
   </head>
+
   <body class="game-body">
+
+    <!-- Bovenste balk met spelstatistieken en timer -->
     <header class="game-header">
+
+      <!-- Linker statistiekblok: combo en score -->
       <section class="game-stat">
         <p class="combo">Combo: x2</p>
         <p class="score">Score: 0</p>
       </section>
 
+      <!-- Middelste blok: aftimer -->
       <section class="game-timer">
         <p>⏱️ Time</p>
         <p class="timer">00:30</p>
       </section>
 
+      <!-- Rechter statistiekblok: pogingen en level -->
       <section class="game-stat">
         <p class="tries">🎯 Try: 5</p>
         <p>Level: <span class="level">1</span></p>
       </section>
+
     </header>
 
+    <!-- Speelveld: het p5.js canvas wordt hier door JavaScript in geladen -->
     <main class="game-canvas" aria-label="Game canvas">
+
+      <!-- Aftelling die verschijnt voor het spel begint -->
       <div class="countdown" aria-live="assertive">5</div>
+
+      <!-- Game-over scherm, verborgen totdat het spel eindigt -->
       <section class="game-over" hidden aria-live="assertive">
         <h1>Game Over</h1>
         <p class="final-score">Score: 0</p>
         <p class="final-highscore">Highscore: 0</p>
+        <!-- Knop om het spel opnieuw te starten -->
         <button class="restart-button" type="button">Opnieuw</button>
+        <!-- Knop om terug te gaan naar het hoofdmenu -->
         <button class="menu-button" type="button">Menu</button>
       </section>
+
     </main>
 
+    <!-- p5.js bibliotheek voor het tekenen van het canvas en de targets -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+    <!-- p5.sound voor geluidseffecten in het spel -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js">
+    </script>
+    <!-- Eigen spellogica -->
     <script src="game.js"></script>
+
   </body>
 </html>
