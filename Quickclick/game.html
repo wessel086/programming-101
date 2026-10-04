@@ -8,41 +8,31 @@
   </head>
   <body class="game-body">
 
-    <!-- Bovenbalk met spelstatistieken en timer -->
     <header class="game-header">
-
-      <!-- Home knop linksboven -->
       <a href="Home.html" class="home-btn">&#8592; Home</a>
 
-      <!-- Score en combo links -->
       <div class="game-stat">
         <p class="combo">Combo: x2</p>
         <p class="score">Score: 0</p>
       </div>
 
-      <!-- Timer in het midden -->
       <div class="game-stat game-timer">
         <p>&#9201; Time</p>
         <p class="timer">00:30</p>
       </div>
 
-      <!-- Pogingen en level rechts -->
-      <div class="game-stat">
-        <p class="tries">&#127919; Try: 5</p>
-        <p class="level">Level: 1</p>
-      </div>
+
+  <div class="game-stat game-stat-right">
+  <p class="level">Level: 1</p>
+</div>
+
+      <!-- Lege kolom rechts zodat de timer exact in het midden staat -->
 
     </header>
 
     <main>
-
-      <!-- Canvas waarop het spel wordt getekend -->
       <div class="game-canvas">
-
-        <!-- Aftelling voor het spel begint, gecentreerd over het canvas -->
         <div class="countdown">5</div>
-
-        <!-- Game-over scherm -->
         <div class="game-over">
           <h1>Game Over</h1>
           <p class="final-score">Score: 0</p>
@@ -50,7 +40,6 @@
           <button class="restart-button">Opnieuw</button>
           <button class="menu-button">Menu</button>
         </div>
-
       </div>
     </main>
 

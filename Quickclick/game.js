@@ -36,13 +36,11 @@ const targetLifetimesByLevel = {
   4: { normal: 3000, time: 1000, gold: 1000 },
 };
 
-// Berekent de targetgrootte op basis van het scherm en maakt targets kleiner in level 4.
 function updateTargetDiameter() {
   const standardDiameter = windowWidth * 0.1;
   targetDiameter = savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
 }
 
-// Kiest een willekeurige plek en een targettype voor een nieuw target.
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
   const randomX = random(radius, width - radius);
@@ -60,19 +58,16 @@ function setRandomTargetPosition() {
   return { x: randomX, y: randomY, type, spawnedAt: millis() };
 }
 
-// Maakt één target en voegt het toe aan de lijst met actieve targets.
 function spawnTarget() {
   targets.push(setRandomTargetPosition());
 }
 
-// Vult lege plekken aan totdat er maximaal vijf targets tegelijk zijn.
 function fillTargetSlots() {
   while (targets.length < maxTargets) {
     spawnTarget();
   }
 }
 
-// Zet de resterende tijd om naar minuten en seconden en toont die in beeld.
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -81,18 +76,15 @@ function updateTimerDisplay() {
   );
 }
 
-// Werkt de scoretekst bij.
 function updateScoreDisplay() {
   scoreDisplay.html("Score: " + score);
 }
 
-// Geeft seconden bij de timer op en werkt de weergave meteen bij.
 function addTime(seconds) {
   timeLeft += seconds;
   updateTimerDisplay();
 }
 
-// Haalt seconden van de timer af, zonder dat de tijd onder nul komt.
 function subtractTime(seconds) {
   timeLeft = Math.max(0, timeLeft - seconds);
   updateTimerDisplay();
@@ -102,7 +94,10 @@ function subtractTime(seconds) {
   }
 }
 
-// Stopt het spel en toont de eindscore en de nieuwe highscore.
+// Stopt het spel en toont het game-over scherm.
+// .style("display", "flex") is nodig omdat .show() van p5 display: block zet,
+// waardoor align-items en justify-content niet werken.
+// Array.isArray() check voorkomt crash als qc_previous_scores geen array is.
 function finishGame() {
   if (gameOver) {
     return;
@@ -117,19 +112,17 @@ function finishGame() {
     storeItem("qc_highscore", highscore);
   }
 
-  const scores = getItem("qc_previous_scores") ?? [];
+  const rawScores = getItem("qc_previous_scores");
+  const scores = Array.isArray(rawScores) ? rawScores : [];
   const name = (getItem("qc_name") ?? "").trim() || "Anoniem";
   scores.unshift({ name, score, level: savedLevel });
   storeItem("qc_previous_scores", scores.slice(0, 10));
 
   finalScoreDisplay.html("Score: " + score);
   finalHighscoreDisplay.html("Highscore: " + highscore);
-
-  // display: flex zodat align-items en justify-content werken
   gameOverDisplay.style("display", "flex");
 }
 
-// Telt elke seconde af via draw().
 function tickTimer() {
   if (!gameStarted || gameOver) {
     return;
@@ -142,7 +135,6 @@ function tickTimer() {
   }
 }
 
-// Zet de score klaar en start de timer nadat de countdown is afgelopen.
 function startGame() {
   score = 0;
   updateScoreDisplay();
@@ -153,19 +145,16 @@ function startGame() {
   lastSecond = Math.floor(millis() / 1000);
 }
 
-// Telt vijf seconden af met millis() en start daarna het spel.
+// Toont de countdown gecentreerd via display: flex.
 function startCountdown() {
   countdownValue = 5;
   countdownStartTime = millis();
   countingDown = true;
   countdownDisplay.html(countdownValue);
-
-  // display: flex zodat de countdown gecentreerd staat
   countdownDisplay.style("display", "flex");
   updateTimerDisplay();
 }
 
-// Werkt de countdown bij en start het spel als de countdown voorbij is.
 function tickCountdown() {
   if (!countingDown) {
     return;
@@ -187,7 +176,6 @@ function tickCountdown() {
   }
 }
 
-// Zet de score en tijd terug en start hetzelfde level opnieuw.
 function restartGame() {
   gameOver = false;
   gameStarted = false;
@@ -198,21 +186,17 @@ function restartGame() {
 
   updateScoreDisplay();
   updateTimerDisplay();
-
-  // Verberg game-over scherm
   gameOverDisplay.style("display", "none");
   fillTargetSlots();
   startCountdown();
 }
 
-// Laadt de crosshair afbeelding voordat het spel start.
 function preload() {
   crosshairImg = loadImage("fotos/crosshair.png");
   clickSound = loadSound("geluiden/pew.wav");
   missSound = loadSound("geluiden/miss.mp3");
 }
 
-// Maakt het canvas, koppelt de knoppen en start de countdown.
 function setup() {
   canvasArea = select(".game-canvas");
   levelDisplay = select(".level");
@@ -228,7 +212,7 @@ function setup() {
   savedLevel = getItem("qc_level") ?? "1";
   targetLifetimes = targetLifetimesByLevel[savedLevel] ?? targetLifetimesByLevel[1];
 
-  levelDisplay.html(savedLevel);
+  levelDisplay.html("Level: " + savedLevel);
 
   const canvas = createCanvas(canvasArea.width, canvasArea.height);
   canvas.parent(canvasArea);
@@ -247,7 +231,6 @@ function setup() {
   startCountdown();
 }
 
-// Verwijdert verlopen targets en tekent alle actieve targets.
 function drawTargets() {
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
@@ -273,7 +256,6 @@ function drawTargets() {
   }
 }
 
-// Tekent een klein rondje op de plek waar de speler heeft geklikt.
 function drawClickFeedback() {
   if (clickFeedback && millis() - clickFeedback.time < 300) {
     fill(clickFeedback.color);
@@ -281,12 +263,10 @@ function drawClickFeedback() {
   }
 }
 
-// Tekent de crosshair op de huidige muispositie.
 function drawCrosshair() {
   image(crosshairImg, mouseX - 16, mouseY - 16, 48, 48);
 }
 
-// Tekent elk frame de achtergrond, targets, feedback en crosshair.
 function draw() {
   if (gameOver) {
     return;
@@ -308,7 +288,6 @@ function draw() {
   drawCrosshair();
 }
 
-// Controleert of de speler een target raakt en geeft de bijbehorende beloning.
 function mousePressed() {
   if (!gameStarted) {
     return;
@@ -359,7 +338,6 @@ function mousePressed() {
   }
 }
 
-// Past het canvas en de targets aan wanneer het browservenster van formaat verandert.
 function windowResized() {
   resizeCanvas(canvasArea.width, canvasArea.height);
   updateTargetDiameter();
