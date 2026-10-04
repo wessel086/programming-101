@@ -56,7 +56,7 @@ main {
   padding: 24px;
 }
 
-/* Linker en rechter kolom: panelen beginnen bovenaan */
+/* Linker en rechter kolom vullen de volledige hoogte van main */
 .side-column {
   display: flex;
   flex: 1;
@@ -106,6 +106,11 @@ main {
 /* =====================
    Bonuslijst
    ===================== */
+
+/* Bonuspaneel vult de resterende ruimte in de linkerkolom */
+.bonus-panel {
+  flex: 1;
+}
 
 /* Verwijder standaard bullets, eigen bolletjes via bonus-dot */
 .bonus-panel ul {
@@ -185,12 +190,11 @@ main {
   padding: 10px 12px;
   font-size: 16px;
   width: 100%;
-  background-color: #12172200;
+  background-color: #12172280;
   border: 1px solid #3c4659;
   border-radius: 10px;
   color: white;
   outline: none;
-  background-color: #12172280;
 }
 
 /* Rand oplichten als je erin klikt */
@@ -255,7 +259,7 @@ main {
   background-color: #27bd75;
 }
 
-/* Geselecteerde levelknop: witte rand en blauwe achtergrond */
+/* Geselecteerde levelknop: blauwe rand en achtergrond */
 .level-btn.selected {
   border: 2px solid #5a7fd4;
   background-color: #2857b8;
