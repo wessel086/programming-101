@@ -42,9 +42,10 @@ body {
    Homepagina layout
    ===================== */
 
-/* Flexbox-layout voor de drie kolommen op de homepagina */
+/* Drie kolommen naast elkaar, kolommen strekken zich uit tot gelijke hoogte */
 main {
   display: flex;
+  align-items: stretch;
   gap: 24px;
   max-width: 1200px;
   min-height: 75vh;
@@ -52,18 +53,20 @@ main {
   padding: 24px;
 }
 
-/* Linker en rechter kolom, elk nemen 1 deel van de ruimte */
+/* Linker en rechter kolom: panelen beginnen bovenaan */
 .side-column {
   display: flex;
   flex: 1;
   flex-direction: column;
+  justify-content: flex-start;
   gap: 20px;
 }
 
-/* Middelste kolom, neemt 2 delen en centreert de inhoud */
+/* Middelste kolom: centreert het startscherm verticaal en horizontaal */
 .middle {
   display: flex;
   flex: 2;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -122,7 +125,7 @@ main {
    Startscherm
    ===================== */
 
-/* Startscherm gecentreerd met maximale breedte */
+/* Startscherm vult de volledige breedte van de middelste kolom */
 .start-screen {
   display: flex;
   width: 100%;
@@ -207,8 +210,9 @@ main {
    Scorepaneel
    ===================== */
 
-/* Minimale hoogte zodat het paneel niet inklapt als het leeg is */
+/* Scorepaneel vult de volledige hoogte van de rechterkolom */
 .score-panel {
+  flex: 1;
   min-height: 460px;
 }
 
@@ -230,7 +234,6 @@ main {
   border-top: 1px solid #555;
   color: #bbb;
   text-align: center;
-  font-size: 20px;
 }
 
 /* =====================
@@ -304,7 +307,7 @@ main {
   width: 100%;
   height: 80vh;
   background-color: #181818;
-  cursor: href= "fotos/crosshair.png";
+  cursor: url("fotos/crosshair.png"), crosshair;
 }
 
 /* Canvas zelf als blok zodat er geen extra witruimte onder zit */
