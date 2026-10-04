@@ -1,11 +1,14 @@
+/* Achtergrondkleur als fallback als de gradient niet laadt */
 html {
   background-color: #010461;
 }
 
+/* Alle elementen inclusief padding en border in de breedte */
 * {
   box-sizing: border-box;
 }
 
+/* Standaard stijl voor de hele pagina */
 body {
   margin: 0;
   background: linear-gradient(to bottom, #09546d, #010461);
@@ -17,18 +20,21 @@ body {
    Homepagina header
    ===================== */
 
+/* Bovenste balk met de paginatitel */
 .page-header {
   padding: 28px 20px;
   border-bottom: 1px solid #3c4659;
   text-align: center;
 }
 
+/* Grote paginatitel */
 .page-header h1 {
   margin: 0 0 8px;
   font-size: 48px;
   letter-spacing: 2px;
 }
 
+/* Ondertitel in lichtgrijs */
 .page-header p {
   margin: 0;
   color: #aab2c8;
@@ -39,6 +45,7 @@ body {
    Homepagina layout
    ===================== */
 
+/* Drie kolommen naast elkaar: links, midden, rechts */
 main {
   display: flex;
   align-items: stretch;
@@ -49,6 +56,7 @@ main {
   padding: 24px;
 }
 
+/* Linker- en rechterkolom, elk even breed */
 .side-column {
   display: flex;
   flex: 1;
@@ -57,6 +65,7 @@ main {
   gap: 20px;
 }
 
+/* Middelste kolom, twee keer zo breed als de zijkolommen */
 .middle {
   display: flex;
   flex: 2;
@@ -69,6 +78,7 @@ main {
    Infopanelen
    ===================== */
 
+/* Donker paneel met afgeronde hoeken voor info-blokken */
 .info-panel {
   padding: 20px;
   border: 1px solid #3c4659;
@@ -77,12 +87,14 @@ main {
   box-shadow: 0 12px 30px rgb(0 0 0 / 20%);
 }
 
+/* Muisafbeelding zweeft rechts naast de tekst */
 .muis {
   max-width: 40%;
   float: right;
   margin-bottom: 5px;
 }
 
+/* Paneeltitel met scheidingslijn eronder */
 .info-panel h2 {
   margin: 0 0 14px;
   font-size: 18px;
@@ -95,16 +107,19 @@ main {
    Bonuslijst
    ===================== */
 
+/* Bonuspaneel vult de volledige hoogte van de kolom */
 .bonus-panel {
   flex: 1;
 }
 
+/* Lijst zonder standaard opsommingstekens */
 .bonus-panel ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* Elke bonusrij met scheidingslijn eronder */
 .bonus-panel li {
   display: flex;
   align-items: center;
@@ -114,20 +129,24 @@ main {
   font-size: 14px;
 }
 
+/* Laatste rij heeft geen scheidingslijn */
 .bonus-panel li:last-child {
   border-bottom: none;
 }
 
+/* Beschrijvingstekst in lichtgrijs */
 .bonus-panel li span:nth-child(2) {
   flex: 1;
   color: #aab2c8;
 }
 
+/* Bonuswaarde in wit en iets kleiner */
 .bonus-panel li strong {
   font-size: 13px;
   color: white;
 }
 
+/* Klein gekleurd bolletje als visuele indicator per bonustype */
 .bonus-dot {
   display: inline-block;
   width: 10px;
@@ -136,6 +155,7 @@ main {
   border-radius: 50%;
 }
 
+/* Kleuren per bonustype */
 .gold-dot { background-color: gold; }
 .green-dot { background-color: #2ecc71; }
 .gray-dot { background-color: #888; }
@@ -144,6 +164,7 @@ main {
    Startscherm
    ===================== */
 
+/* Formulier om naam in te voeren en level te kiezen */
 .start-screen {
   display: flex;
   width: 100%;
@@ -157,12 +178,14 @@ main {
   box-shadow: 0 12px 30px rgb(0 0 0 / 20%);
 }
 
+/* Klein label boven het naamveld */
 .name-label {
   font-size: 13px;
   color: #aab2c8;
   letter-spacing: 0.5px;
 }
 
+/* Tekstveld voor de naam van de speler */
 .name-input {
   padding: 10px 12px;
   font-size: 16px;
@@ -174,22 +197,26 @@ main {
   outline: none;
 }
 
+/* Blauwe rand als het veld actief is */
 .name-input:focus {
   border-color: #5a7fd4;
 }
 
+/* Levelnummer in goud en vet, rechts uitgelijnd in de header */
 .level {
   color: #f0c040;
   font-weight: bold;
-  float: right;
+  text-align: right;
 }
 
+/* Rij met levelknoppen, wrappen als ze niet passen */
 .level-select {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
+/* Label boven de levelknoppen op volledige breedte */
 .level-select > p {
   width: 100%;
   margin: 0;
@@ -198,6 +225,7 @@ main {
   letter-spacing: 0.5px;
 }
 
+/* Levelknoppen gelijkmatige breedte */
 .level-btn {
   flex: 1;
   min-width: 80px;
@@ -212,6 +240,7 @@ main {
   transition: background-color 150ms ease, transform 150ms ease;
 }
 
+/* Startknop op volledige breedte */
 .start-btn {
   width: 100%;
   padding: 12px 16px;
@@ -225,27 +254,32 @@ main {
   transition: background-color 150ms ease, transform 150ms ease;
 }
 
+/* Zweefeffect: knop beweegt licht omhoog */
 .level-btn:hover,
 .start-btn:not(:disabled):hover,
 .game-over button:hover {
   transform: translateY(-2px);
 }
 
+/* Startknop lichter groen bij zweefeffect */
 .start-btn:not(:disabled):hover {
   background-color: #27bd75;
 }
 
+/* Geselecteerde levelknop: blauwe rand en achtergrond */
 .level-btn.selected {
   border: 2px solid #5a7fd4;
   background-color: #2857b8;
 }
 
+/* Uitgeschakelde startknop: grijs en niet klikbaar */
 .start-btn:disabled {
   background-color: #2e3545;
   color: #666;
   cursor: not-allowed;
 }
 
+/* Highscore in goud, gecentreerd */
 .highscore {
   margin: 0;
   color: gold;
@@ -257,10 +291,12 @@ main {
    Scorepaneel
    ===================== */
 
+/* Scorepaneel vult de volledige hoogte van de rechterkolom */
 .score-panel {
   flex: 1;
 }
 
+/* Lege toestand van het scorepaneel */
 .panel-empty {
   padding: 40px 10px;
   border: 1px dashed #3c4659;
@@ -274,6 +310,7 @@ main {
    Footer
    ===================== */
 
+/* Onderbalk met lichtgrijze tekst en scheidingslijn */
 .page-footer {
   padding: 16px;
   border-top: 1px solid #3c4659;
@@ -286,6 +323,7 @@ main {
    Responsive homepagina
    ===================== */
 
+/* Op kleine schermen: kolommen onder elkaar, startscherm bovenaan */
 @media (max-width: 700px) {
   main {
     flex-direction: column;
@@ -300,12 +338,13 @@ main {
    Gamepagina layout
    ===================== */
 
+/* Gamepagina vult de volledige schermhoogte */
 .game-body {
   min-height: 100vh;
 }
 
-/* 5 kolommen: home | stat-links | timer-midden | stat-rechts | leeg
-   Kolom 1 en 5 zijn even breed zodat de timer (kolom 3) exact in het midden staat */
+/* Bovenste balk met 5 kolommen: home | stat-links | timer | stat-rechts | leeg
+   Kolom 1 en 5 zijn even breed zodat de timer exact in het midden staat */
 .game-header {
   display: grid;
   grid-template-columns: 120px 1fr 1fr 1fr 120px;
@@ -316,6 +355,7 @@ main {
   border-bottom: 2px solid white;
 }
 
+/* Knop om terug naar het hoofdmenu te gaan */
 .home-btn {
   padding: 8px 16px;
   border: 1px solid #596579;
@@ -328,24 +368,34 @@ main {
   transition: background-color 150ms ease, transform 150ms ease;
 }
 
+/* Home-knop blauw bij zweefeffect */
 .home-btn:hover {
   background-color: #2857b8;
   transform: translateY(-2px);
 }
 
+/* Statistiekblok in de header (score, level) */
 .game-stat {
   font-size: 24px;
 }
 
+/* Kleine marge boven en onder de tekst in een statistiek */
 .game-stat p {
   margin: 8px 0;
 }
 
+/* Rechts uitgelijnde statistieken (level) */
+.game-stat-right {
+  text-align: right;
+}
+
+/* Timer in het midden, groter lettertype */
 .game-timer {
   font-size: 36px;
   text-align: center;
 }
 
+/* Overschrijft de standaard main-stijl voor de gamepagina */
 .game-body main {
   display: block;
   max-width: none;
@@ -358,6 +408,7 @@ main {
    Canvas
    ===================== */
 
+/* Container voor het p5.js canvas, donkere achtergrond */
 .game-canvas {
   position: relative;
   width: 100%;
@@ -366,6 +417,7 @@ main {
   cursor: url("fotos/crosshair.png"), crosshair;
 }
 
+/* Canvas zelf als blok zodat er geen extra witruimte onder zit */
 .game-canvas canvas {
   display: block;
 }
@@ -374,7 +426,8 @@ main {
    Countdown
    ===================== */
 
-/* Standaard verborgen — JS zet display: flex zodat centering werkt */
+/* Aftelling voor het spel begint, gecentreerd over het canvas.
+   Standaard verborgen — JS zet display: flex zodat centrering werkt */
 .countdown {
   position: absolute;
   z-index: 1;
@@ -392,7 +445,8 @@ main {
    Game-over scherm
    ===================== */
 
-/* Standaard verborgen — JS zet display: flex zodat centering werkt */
+/* Scherm dat verschijnt als het spel voorbij is.
+   Standaard verborgen — JS zet display: flex zodat centrering werkt */
 .game-over {
   position: absolute;
   z-index: 2;
@@ -405,11 +459,13 @@ main {
   font-size: 28px;
 }
 
+/* Kleine marge voor tekst in het game-over scherm */
 .game-over h1,
 .game-over p {
   margin: 10px;
 }
 
+/* Gedeelde stijl voor knoppen in het game-over scherm */
 .game-over button {
   padding: 10px 20px;
   border: 0;
@@ -419,20 +475,24 @@ main {
   transition: background-color 150ms ease, transform 150ms ease;
 }
 
+/* Herstart-knop in rood */
 .restart-button {
   background-color: #d94a4a;
   color: white;
 }
 
+/* Herstart-knop lichter rood bij zweefeffect */
 .restart-button:hover {
   background-color: #ef5b5b;
 }
 
+/* Menu-knop in blauw */
 .menu-button {
   background-color: #2857b8;
   color: white;
 }
 
+/* Menu-knop lichter blauw bij zweefeffect */
 .menu-button:hover {
   background-color: #3970d8;
 }
@@ -441,6 +501,7 @@ main {
    Responsive gamepagina
    ===================== */
 
+/* Op kleine schermen: kleinere padding en lettergroottes */
 @media (max-width: 600px) {
   .game-header {
     grid-template-columns: 80px 1fr 1fr 1fr 80px;
