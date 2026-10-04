@@ -124,7 +124,9 @@ function finishGame() {
 
   finalScoreDisplay.html("Score: " + score);
   finalHighscoreDisplay.html("Highscore: " + highscore);
-  gameOverDisplay.show();
+
+  // display: flex zodat align-items en justify-content werken
+  gameOverDisplay.style("display", "flex");
 }
 
 // Telt elke seconde af via draw().
@@ -157,7 +159,9 @@ function startCountdown() {
   countdownStartTime = millis();
   countingDown = true;
   countdownDisplay.html(countdownValue);
-  countdownDisplay.show();
+
+  // display: flex zodat de countdown gecentreerd staat
+  countdownDisplay.style("display", "flex");
   updateTimerDisplay();
 }
 
@@ -179,7 +183,7 @@ function tickCountdown() {
     countingDown = false;
     countdownDisplay.html("Start!");
     startGame();
-    setTimeout(() => countdownDisplay.hide(), 500);
+    setTimeout(() => countdownDisplay.style("display", "none"), 500);
   }
 }
 
@@ -194,7 +198,9 @@ function restartGame() {
 
   updateScoreDisplay();
   updateTimerDisplay();
-  gameOverDisplay.hide();
+
+  // Verberg game-over scherm
+  gameOverDisplay.style("display", "none");
   fillTargetSlots();
   startCountdown();
 }

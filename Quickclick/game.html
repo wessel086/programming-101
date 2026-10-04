@@ -1,66 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="nl">
   <head>
-    <!-- Tekenset instellen op UTF-8 zodat speciale tekens goed worden weergegeven -->
-    <meta charset="UTF-8">
-    <!-- Zorgt dat de pagina goed schaalt op mobiele schermen -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quick Click - Game</title>
-    <!-- Koppeling naar het externe CSS-bestand -->
-    <link rel="stylesheet" href="Styleqc.css">
+    <link rel="stylesheet" href="styleqc.css" />
   </head>
-
   <body class="game-body">
 
-    <!-- Bovenste balk met spelstatistieken en timer -->
+    <!-- Bovenbalk met spelstatistieken en timer -->
     <header class="game-header">
 
-      <!-- Linker statistiekblok: combo en score -->
-      <section class="game-stat">
+      <!-- Home knop linksboven -->
+      <a href="Home.html" class="home-btn">&#8592; Home</a>
+
+      <!-- Score en combo links -->
+      <div class="game-stat">
         <p class="combo">Combo: x2</p>
         <p class="score">Score: 0</p>
-      </section>
+      </div>
 
-      <!-- Middelste blok: aftimer -->
-      <section class="game-timer">
-        <p>⏱️ Time</p>
+      <!-- Timer in het midden -->
+      <div class="game-stat game-timer">
+        <p>&#9201; Time</p>
         <p class="timer">00:30</p>
-      </section>
+      </div>
 
-      <!-- Rechter statistiekblok: pogingen en level -->
-      <section class="game-stat">
-        <p class="tries">🎯 Try: 5</p>
-        <p>Level: <span class="level">1</span></p>
-      </section>
+      <!-- Pogingen en level rechts -->
+      <div class="game-stat">
+        <p class="tries">&#127919; Try: 5</p>
+        <p class="level">Level: 1</p>
+      </div>
 
     </header>
 
-    <!-- Speelveld: het p5.js canvas wordt hier door JavaScript in geladen -->
-    <main class="game-canvas" aria-label="Game canvas">
+    <main>
 
-      <!-- Aftelling die verschijnt voor het spel begint -->
-      <div class="countdown" aria-live="assertive">5</div>
+      <!-- Canvas waarop het spel wordt getekend -->
+      <div class="game-canvas">
 
-      <!-- Game-over scherm, verborgen totdat het spel eindigt -->
-      <section class="game-over" hidden aria-live="assertive">
-        <h1>Game Over</h1>
-        <p class="final-score">Score: 0</p>
-        <p class="final-highscore">Highscore: 0</p>
-        <!-- Knop om het spel opnieuw te starten -->
-        <button class="restart-button" type="button">Opnieuw</button>
-        <!-- Knop om terug te gaan naar het hoofdmenu -->
-        <button class="menu-button" type="button">Menu</button>
-      </section>
+        <!-- Aftelling voor het spel begint, gecentreerd over het canvas -->
+        <div class="countdown">5</div>
 
+        <!-- Game-over scherm -->
+        <div class="game-over">
+          <h1>Game Over</h1>
+          <p class="final-score">Score: 0</p>
+          <p class="final-highscore">Highscore: 0</p>
+          <button class="restart-button">Opnieuw</button>
+          <button class="menu-button">Menu</button>
+        </div>
+
+      </div>
     </main>
 
-    <!-- p5.js bibliotheek voor het tekenen van het canvas en de targets -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
-    <!-- p5.sound voor geluidseffecten in het spel -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js">
-    </script>
-    <!-- Eigen spellogica -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/addons/p5.sound.min.js"></script>
     <script src="game.js"></script>
 
   </body>
