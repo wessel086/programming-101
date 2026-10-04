@@ -22,20 +22,23 @@ body {
 
 /* Bovenbalk met titel en ondertitel */
 .page-header {
-  padding: 20px;
-  border-bottom: 1px solid #555;
+  padding: 28px 20px;
+  border-bottom: 1px solid #3c4659;
   text-align: center;
 }
 
 /* Titel zonder standaard marge, groter lettertype */
 .page-header h1 {
   margin: 0 0 8px;
-  font-size: 40px;
+  font-size: 48px;
+  letter-spacing: 2px;
 }
 
-/* Ondertitel zonder marge */
+/* Ondertitel iets lichter van kleur */
 .page-header p {
   margin: 0;
+  color: #aab2c8;
+  font-size: 15px;
 }
 
 /* =====================
@@ -75,18 +78,13 @@ main {
    Infopanelen
    ===================== */
 
-/* Stijl voor de infopanelen in de zijkolommen */
+/* Gedeelde stijl voor de infopanelen in de zijkolommen */
 .info-panel {
-  padding: 18px;
+  padding: 20px;
   border: 1px solid #3c4659;
   border-radius: 16px;
   background-color: #1b202b;
   box-shadow: 0 12px 30px rgb(0 0 0 / 20%);
-}
-
-/* Verwijder standaard bovenmarge van de koptekst in het infopaneel */
-.info-panel h2 {
-  margin-top: 0;
 }
 
 /* Muisafbeelding rechts uitgelijnd in het infopaneel */
@@ -96,8 +94,17 @@ main {
   margin-bottom: 5px;
 }
 
+/* Koptekst in infopaneel: iets groter en lichte onderlijn */
+.info-panel h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3c4659;
+}
+
 /* =====================
-   Bonuspaneel
+   Bonuslijst
    ===================== */
 
 /* Verwijder standaard bullets, eigen bolletjes via bonus-dot */
@@ -112,12 +119,26 @@ main {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid #2a3040;
+  font-size: 14px;
 }
 
-/* Tekst neemt de beschikbare ruimte, waarde rechts uitgelijnd */
+/* Laatste item geen onderlijn */
+.bonus-panel li:last-child {
+  border-bottom: none;
+}
+
+/* Tekst neemt de beschikbare ruimte */
 .bonus-panel li span:nth-child(2) {
   flex: 1;
+  color: #aab2c8;
+}
+
+/* Vetgedrukte waarde rechts */
+.bonus-panel li strong {
+  font-size: 13px;
+  color: white;
 }
 
 /* Klein gekleurd bolletje voor bonustypes */
@@ -125,14 +146,14 @@ main {
   display: inline-block;
   width: 10px;
   height: 10px;
-  border-radius: 50%;
   flex-shrink: 0;
+  border-radius: 50%;
 }
 
 /* Kleuren per bonustype */
 .gold-dot { background-color: gold; }
-.green-dot { background-color: green; }
-.gray-dot { background-color: gray; }
+.green-dot { background-color: #2ecc71; }
+.gray-dot { background-color: #888; }
 
 /* =====================
    Startscherm
@@ -145,23 +166,31 @@ main {
   max-width: 460px;
   flex-direction: column;
   gap: 16px;
-  padding: 24px;
+  padding: 28px;
   border: 1px solid #3c4659;
   border-radius: 16px;
   background-color: #1b202b;
   box-shadow: 0 12px 30px rgb(0 0 0 / 20%);
 }
 
+/* Label boven het naamveld */
+.name-label {
+  font-size: 13px;
+  color: #aab2c8;
+  letter-spacing: 0.5px;
+}
+
 /* Naam-invoerveld passend bij de donkere stijl */
 .name-input {
-  padding: 10px;
+  padding: 10px 12px;
   font-size: 16px;
   width: 100%;
-  background-color: #1e2535;
+  background-color: #12172200;
   border: 1px solid #3c4659;
   border-radius: 10px;
   color: white;
   outline: none;
+  background-color: #12172280;
 }
 
 /* Rand oplichten als je erin klikt */
@@ -180,17 +209,36 @@ main {
 .level-select > p {
   width: 100%;
   margin: 0;
+  font-size: 13px;
+  color: #aab2c8;
+  letter-spacing: 0.5px;
 }
 
-/* Gedeelde stijl voor level- en startknoppen */
-.level-btn,
-.start-btn {
-  padding: 10px 16px;
+/* Levelknoppen gelijkmatige breedte */
+.level-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 8px;
   border: 1px solid #596579;
   border-radius: 10px;
-  background-color: #292929;
+  background-color: #252d3d;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+/* Startknop op volledige breedte */
+.start-btn {
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #20a464;
   color: white;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 150ms ease, transform 150ms ease;
 }
@@ -202,13 +250,6 @@ main {
   transform: translateY(-2px);
 }
 
-/* Startknop: groen en vetgedrukt */
-.start-btn {
-  border: 0;
-  background-color: #20a464;
-  font-weight: bold;
-}
-
 /* Startknop lichter groen bij zweefeffect */
 .start-btn:not(:disabled):hover {
   background-color: #27bd75;
@@ -216,14 +257,14 @@ main {
 
 /* Geselecteerde levelknop: witte rand en blauwe achtergrond */
 .level-btn.selected {
-  border: 3px solid white;
+  border: 2px solid #5a7fd4;
   background-color: #2857b8;
 }
 
 /* Uitgeschakelde startknop: grijs en niet klikbaar */
 .start-btn:disabled {
-  background-color: #555;
-  color: #bbb;
+  background-color: #2e3545;
+  color: #666;
   cursor: not-allowed;
 }
 
@@ -231,7 +272,7 @@ main {
 .highscore {
   margin: 0;
   color: gold;
-  font-size: 20px;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -242,15 +283,16 @@ main {
 /* Scorepaneel vult de volledige hoogte van de rechterkolom */
 .score-panel {
   flex: 1;
-  min-height: 460px;
 }
 
-/* Lege toestand van het scorepaneel met stippelrand */
+/* Lege toestand van het scorepaneel */
 .panel-empty {
-  padding: 35px 10px;
-  border: 1px dashed #777;
-  color: #bbb;
+  padding: 40px 10px;
+  border: 1px dashed #3c4659;
+  border-radius: 10px;
+  color: #555e72;
   text-align: center;
+  font-size: 14px;
 }
 
 /* =====================
@@ -260,9 +302,10 @@ main {
 /* Onderbalk met lichtgrijze tekst en scheidingslijn */
 .page-footer {
   padding: 16px;
-  border-top: 1px solid #555;
-  color: #bbb;
+  border-top: 1px solid #3c4659;
+  color: #555e72;
   text-align: center;
+  font-size: 13px;
 }
 
 /* =====================
