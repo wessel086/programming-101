@@ -181,6 +181,7 @@ main {
 .level {
   color: #f0c040;
   font-weight: bold;
+  float: right;
 }
 
 .level-select {
