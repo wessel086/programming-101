@@ -52,7 +52,7 @@ function updateTargetDiameter() {
 // Kans: ~6.5% gold (>=100), ~9.3% time (>=90), rest normal. //!7 - return
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
-  const randomX = random(radius, width - radius); //!82
+  const randomX = random(radius, width - radius); //!82 c.l(rx)
   const randomY = random(radius, height - radius);
 
   const spawnRoll = random(107);
