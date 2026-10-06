@@ -1,4 +1,4 @@
-// Verwijzingen naar HTML-elementen — worden ingesteld in setup().
+// Verwijzingen naar HTML-elementen — worden ingesteld in setup(). //!8 
 let canvasArea;       // De container waar het canvas in komt
 let levelDisplay;     // Toont het huidige level
 let scoreDisplay;     // Toont de huidige score
@@ -15,7 +15,7 @@ let crosshairImg;     // Afbeelding van het dradenkruis
 let clickSound;       // Geluid bij een raak klik
 let missSound;        // Geluid bij een misser
 
-// Spelstatus — verandert tijdens het spel.
+// Spelstatus — verandert tijdens het spel. //!91
 let score = 0;              // Huidige score
 let timeLeft = 30;          // Resterende tijd in seconden
 let gameStarted = false;    // Of het spel actief bezig is
@@ -27,10 +27,10 @@ let countdownValue = 0;     // Huidig getal in de aftelling
 let countdownStartTime = 0; // Tijdstip waarop de aftelling begon
 let countingDown = false;   // Of de aftelling bezig is
 
-// Maximum aantal targets tegelijk op het scherm
+// Maximum aantal targets tegelijk op het scherm //!2
 const maxTargets = 5;
 
-// Lijst met alle actieve targets
+// Lijst met alle actieve targets //!5
 const targets = [];
 
 // Hoe lang elk targettype zichtbaar blijft per level (in milliseconden)
@@ -49,10 +49,10 @@ function updateTargetDiameter() {
 }
 
 // Kiest een willekeurige positie binnen het canvas en bepaalt het targettype.
-// Kans: ~6.5% gold (>=100), ~9.3% time (>=90), rest normal.
+// Kans: ~6.5% gold (>=100), ~9.3% time (>=90), rest normal. //!7
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
-  const randomX = random(radius, width - radius);
+  const randomX = random(radius, width - radius); //!82
   const randomY = random(radius, height - radius);
 
   const spawnRoll = random(107);
@@ -94,7 +94,7 @@ function updateScoreDisplay() {
   scoreDisplay.html("Score: " + score);
 }
 
-// Voegt seconden toe aan de timer (groen target bonus)
+// Voegt seconden toe aan de timer (groen target bonus) //!72
 function addTime(seconds) {
   timeLeft += seconds;
   updateTimerDisplay();
@@ -105,7 +105,7 @@ function subtractTime(seconds) {
   timeLeft = Math.max(0, timeLeft - seconds);
   updateTimerDisplay();
 
-  if (timeLeft === 0) {
+  if (timeLeft === 0) { //!9
     finishGame();
   }
 }
@@ -123,7 +123,7 @@ function finishGame() {
   gameOver = true;
   gameStarted = false;
 
-  // Sla nieuwe highscore op als de huidige score hoger is
+  // Sla nieuwe highscore op als de huidige score hoger is //!4
   let highscore = getItem("qc_highscore") ?? 0;
   if (score > highscore) {
     highscore = score;
@@ -232,8 +232,8 @@ function preload() {
   missSound = loadSound("geluiden/miss.mp3");
 }
 
-// Wordt eenmalig uitgevoerd door p5.js bij het opstarten
-function setup() {
+// Wordt eenmalig uitgevoerd door p5.js bij het opstarten //!1
+function setup() {  
   // Koppel alle HTML-elementen aan variabelen
   canvasArea = select(".game-canvas");
   levelDisplay = select(".level");
@@ -274,7 +274,7 @@ function setup() {
 
 // Tekent alle actieve targets en verwijdert verlopen targets
 function drawTargets() {
-  // Van achter naar voren itereren zodat splice() de index niet verstoort
+  // Van achter naar voren itereren zodat splice() de index niet verstoort //!6 //!10
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
     const lifetime = targetLifetimes[target.type];
@@ -297,7 +297,7 @@ function drawTargets() {
       targetColor = "gold";
     }
     fill(targetColor);
-    circle(target.x, target.y, targetDiameter);
+    circle(target.x, target.y, targetDiameter); //!3
   }
 }
 
