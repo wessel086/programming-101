@@ -49,7 +49,7 @@ function updateTargetDiameter() {
 }
 
 // Kiest een willekeurige positie binnen het canvas en bepaalt het targettype.
-// Kans: ~6.5% gold (>=100), ~9.3% time (>=90), rest normal. //!7
+// Kans: ~6.5% gold (>=100), ~9.3% time (>=90), rest normal. //!7 - return
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
   const randomX = random(radius, width - radius); //!82
@@ -94,7 +94,7 @@ function updateScoreDisplay() {
   scoreDisplay.html("Score: " + score);
 }
 
-// Voegt seconden toe aan de timer (groen target bonus) //!72
+// Voegt seconden toe aan de timer (groen target bonus) //!72 - parameter, argument, oproepen.
 function addTime(seconds) {
   timeLeft += seconds;
   updateTimerDisplay();
