@@ -2,6 +2,7 @@
 let canvasArea;       // De container waar het canvas in komt
 let levelDisplay;     // Toont het huidige level
 let scoreDisplay;     // Toont de huidige score
+let comboDisplay;     // Toont de huidige combo
 let timerDisplay;     // Toont de resterende tijd
 let countdownDisplay; // Toont de aftelling voor het spel begint
 let gameOverDisplay;  // Het game-over scherm
@@ -17,6 +18,7 @@ let missSound;        // Geluid bij een misser
 
 // Spelstatus — verandert tijdens het spel. //!91
 let score = 0;              // Huidige score
+let combo = 0;              // Aantal opeenvolgende rake klikken
 let timeLeft = 30;          // Resterende tijd in seconden
 let gameStarted = false;    // Of het spel actief bezig is
 let gameOver = false;       // Of het spel voorbij is
@@ -94,6 +96,11 @@ function updateScoreDisplay() {
   scoreDisplay.html("Score: " + score);
 }
 
+// Toont de combo en de scorevermenigvuldiger. De eerste treffer telt als x1.
+function updateComboDisplay() {
+  comboDisplay.html("Combo: x" + Math.max(1, combo));
+}
+
 // Voegt seconden toe aan de timer (groen target bonus) //!72 - parameter, argument, oproepen.
 function addTime(seconds) {
   timeLeft += seconds;
@@ -163,7 +170,9 @@ function tickTimer() {
 // Start het spel na de aftelling: reset score en herstart de timer
 function startGame() {
   score = 0;
+  combo = 0;
   updateScoreDisplay();
+  updateComboDisplay();
 
   // Reset spawntijdstip van bestaande targets zodat ze niet meteen verdwijnen
   for (const target of targets) {
@@ -214,11 +223,13 @@ function restartGame() {
   gameOver = false;
   gameStarted = false;
   score = 0;
+  combo = 0;
   timeLeft = 30;
   clickFeedback = null;
   targets.length = 0; // Leegt de array zonder een nieuwe aan te maken
 
   updateScoreDisplay();
+  updateComboDisplay();
   updateTimerDisplay();
   gameOverDisplay.style("display", "none");
   fillTargetSlots();
@@ -238,6 +249,7 @@ function setup() {
   canvasArea = select(".game-canvas");
   levelDisplay = select(".level");
   scoreDisplay = select(".score");
+  comboDisplay = select(".combo");
   timerDisplay = select(".timer");
   countdownDisplay = select(".countdown");
   gameOverDisplay = select(".game-over");
@@ -251,6 +263,7 @@ function setup() {
   targetLifetimes = targetLifetimesByLevel[savedLevel] ?? targetLifetimesByLevel[1];
 
   levelDisplay.html("Level: " + savedLevel);
+  updateComboDisplay();
 
   // Maak het canvas aan en plaats het in de game-canvas container
   const canvas = createCanvas(canvasArea.width, canvasArea.height);
@@ -282,6 +295,8 @@ function drawTargets() {
     // Verwijder target als de levensduur verstreken is en trek 2 seconden af
     if (gameStarted && millis() - target.spawnedAt >= lifetime) {
       targets.splice(index, 1);
+      combo = 0;
+      updateComboDisplay();
       subtractTime(2);
       if (gameOver) {
         return; // Stop direct als het spel voorbij is
@@ -358,14 +373,16 @@ function mousePressed() {
       // Controleer of de klik binnen de cirkel valt
       if (distance < targetDiameter / 2) {
         clickSound.play();
+        combo += 1;
+        updateComboDisplay();
 
         if (target.type === "normal") {
-          score += 1;
+          score += combo;
           updateScoreDisplay();
         } else if (target.type === "time") {
           addTime(3); // Groen target: +3 seconden
         } else if (target.type === "gold") {
-          score += 5; // Goud target: +5 punten
+          score += 5 * combo; // Goud target: +5 punten, vermenigvuldigd met de combo
           updateScoreDisplay();
         }
 
@@ -387,6 +404,8 @@ function mousePressed() {
 
   // Geen target geraakt: rode feedback en -2 seconden
   if (!hitTarget) {
+    combo = 0;
+    updateComboDisplay();
     missSound.play();
     clickFeedback = {
       x: mouseX,
