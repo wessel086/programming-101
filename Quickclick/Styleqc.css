@@ -32,6 +32,11 @@ body {
   margin: 0 0 8px;
   font-size: 48px;
   letter-spacing: 2px;
+  background: linear-gradient(90deg, #ffd166, #ff6bcb 50%, #7c8cff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgb(255 107 203 / 45%));
 }
 
 /* Ondertitel in lichtgrijs */
