@@ -20,11 +20,11 @@ let missSound;        // Geluid bij een misser
 let score = 0;              // Huidige score
 let combo = 0;              // Aantal opeenvolgende rake klikken
 let timeLeft = 30;          // Resterende tijd in seconden
+let gameEndTime = 0;        // Exacte tijd waarop het spel eindigt
 let gameStarted = false;    // Of het spel actief bezig is
 let gameOver = false;       // Of het spel voorbij is
 let targetDiameter;         // Diameter van de targets in pixels
 let clickFeedback = null;   // Kleine cirkel die kort verschijnt na een klik
-let lastSecond = 0;         // Bijgehouden seconde om de timer per seconde te tikken
 let countdownValue = 0;     // Huidig getal in de aftelling
 let countdownStartTime = 0; // Tijdstip waarop de aftelling begon
 let countingDown = false;   // Of de aftelling bezig is
@@ -104,6 +104,7 @@ function fillTargetSlots() {
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
+
   timerDisplay.html(
     String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0")
   );
@@ -119,15 +120,22 @@ function updateComboDisplay() {
   comboDisplay.html("Combo: x" + Math.max(1, combo));
 }
 
+// Berekent hoeveel hele seconden er nog over zijn op basis van de eindtijd.
+function updateTimeLeft() {
+  timeLeft = Math.max(0, Math.ceil((gameEndTime - millis()) / 1000));
+}
+
 // Voegt seconden toe aan de timer (groen target bonus) //!72 - parameter, argument, oproepen.
 function addTime(seconds) {
-  timeLeft += seconds;
+  gameEndTime += seconds * 1000;
+  updateTimeLeft();
   updateTimerDisplay();
 }
 
 // Trekt seconden af van de timer. Roept finishGame aan als de tijd op is.
 function subtractTime(seconds) {
-  timeLeft = Math.max(0, timeLeft - seconds);
+  gameEndTime = Math.max(millis(), gameEndTime - seconds * 1000);
+  updateTimeLeft();
   updateTimerDisplay();
 
   if (timeLeft === 0) { //!9
@@ -150,6 +158,7 @@ function finishGame() {
 
   // Sla nieuwe highscore op als de huidige score hoger is //!4
   let highscore = getItem("qc_highscore") ?? 0;
+
   if (score > highscore) {
     highscore = score;
     storeItem("qc_highscore", highscore);
@@ -171,17 +180,22 @@ function finishGame() {
   gameOverDisplay.style("display", "flex");
 }
 
-// Wordt elke frame aangeroepen vanuit draw() om de timer per seconde te tikken
+// Wordt elke frame aangeroepen vanuit draw() om de timer bij te werken
 function tickTimer() {
   if (!gameStarted || gameOver) {
     return;
   }
 
-  // Vergelijkt de huidige seconde met de vorige om precies 1x per seconde af te trekken
-  const currentSecond = Math.floor(millis() / 1000);
-  if (currentSecond !== lastSecond) {
-    lastSecond = currentSecond;
-    subtractTime(1);
+  const previousTimeLeft = timeLeft;
+  updateTimeLeft();
+
+  // Werk de HTML alleen bij wanneer de zichtbare tijd verandert.
+  if (timeLeft !== previousTimeLeft) {
+    updateTimerDisplay();
+  }
+
+  if (timeLeft === 0) {
+    finishGame();
   }
 }
 
@@ -197,8 +211,9 @@ function startGame() {
     target.spawnedAt = millis();
   }
 
+  // Sla het exacte eindmoment van het spel op.
+  gameEndTime = millis() + timeLeft * 1000;
   gameStarted = true;
-  lastSecond = Math.floor(millis() / 1000);
 }
 
 // Toont de countdown gecentreerd via display: flex.
@@ -231,6 +246,7 @@ function tickCountdown() {
     countingDown = false;
     countdownDisplay.html("Start!");
     startGame();
+
     // Verberg de countdown na 500ms zodat "Start!" kort zichtbaar blijft
     setTimeout(() => countdownDisplay.style("display", "none"), 500);
   }
@@ -243,6 +259,7 @@ function restartGame() {
   score = 0;
   combo = 0;
   timeLeft = 30;
+  gameEndTime = 0;
   clickFeedback = null;
   targets.length = 0; // Leegt de array zonder een nieuwe aan te maken
 
@@ -291,6 +308,7 @@ function setup() {
   canvas.elt.addEventListener("contextmenu", (event) => event.preventDefault());
 
   restartButton.mouseClicked(restartGame);
+
   menuButton.mouseClicked(() => {
     gameStarted = false;
     gameOver = true;
