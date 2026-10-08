@@ -54,8 +54,26 @@ function updateTargetDiameter() {
 // Kans: ~6.5% gold (>=100), ~9.3% time (>=90), rest normal. //!7 - return
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
-  const randomX = random(radius, width - radius); //!82 c.l(rx)
-  const randomY = random(radius, height - radius);
+  const minimumDistance = targetDiameter * 1.2;
+
+  let randomX;
+  let randomY;
+  let positionIsFree = false;
+  let attempts = 0;
+
+  // Blijf een positie proberen totdat deze niet te dicht bij een ander target ligt.
+  // De limiet voorkomt een oneindige loop als het canvas te klein is.
+  while (!positionIsFree && attempts < 50) {
+    randomX = random(radius, width - radius); //!82 c.l(rx)
+    randomY = random(radius, height - radius);
+
+    positionIsFree = targets.every((target) => {
+      const distance = dist(randomX, randomY, target.x, target.y);
+      return distance >= minimumDistance;
+    });
+
+    attempts += 1;
+  }
 
   const spawnRoll = random(107);
   let type = "normal";
@@ -298,19 +316,23 @@ function drawTargets() {
       combo = 0;
       updateComboDisplay();
       subtractTime(2);
+
       if (gameOver) {
         return; // Stop direct als het spel voorbij is
       }
+
       continue;
     }
 
     // Kleur per targettype: grijs = normaal, groen = tijd, goud = bonus
     let targetColor = "gray";
+
     if (target.type === "time") {
       targetColor = "green";
     } else if (target.type === "gold") {
       targetColor = "gold";
     }
+
     fill(targetColor);
     circle(target.x, target.y, targetDiameter); //!3
   }
@@ -364,6 +386,7 @@ function mousePressed() {
 
   // Level 4: alleen linkse muisknop telt als geldige klik
   const isValidClick = savedLevel !== "4" || mouseButton === LEFT;
+
   if (isValidClick) {
     // Van achter naar voren zodat het bovenste target als eerste geraakt wordt
     for (let index = targets.length - 1; index >= 0; index -= 1) {
@@ -407,12 +430,14 @@ function mousePressed() {
     combo = 0;
     updateComboDisplay();
     missSound.play();
+
     clickFeedback = {
       x: mouseX,
       y: mouseY,
       color: "red",
       time: millis(),
     };
+
     subtractTime(2);
   }
 }
