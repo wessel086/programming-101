@@ -1,41 +1,44 @@
-// Verwijzingen naar HTML-elementen — worden ingesteld in setup(). //!8 
-let canvasArea;       // De container waar het canvas in komt
-let levelDisplay;     // Toont het huidige level
-let scoreDisplay;     // Toont de huidige score
-let comboDisplay;     // Toont de huidige combo
-let timerDisplay;     // Toont de resterende tijd
-let countdownDisplay; // Toont de aftelling voor het spel begint
-let gameOverDisplay;  // Het game-over scherm
-let finalScoreDisplay;     // Eindscore op het game-over scherm
-let finalHighscoreDisplay; // Highscore op het game-over scherm
-let restartButton;    // Knop om opnieuw te spelen
-let menuButton;       // Knop om terug naar het menu te gaan
-let savedLevel;       // Het gekozen level, opgehaald uit localStorage
-let targetLifetimes;  // Hoe lang elk targettype zichtbaar blijft (per level)
-let crosshairImg;     // Afbeelding van het dradenkruis
-let clickSound;       // Geluid bij een raak klik
-let missSound;        // Geluid bij een misser
+// Verwijzingen naar HTML-elementen — worden ingesteld in setup().
+let canvasArea;
+let levelDisplay;
+let scoreDisplay;
+let comboDisplay;
+let timerDisplay;
+let countdownDisplay;
+let gameOverDisplay;
+let finalScoreDisplay;
+let finalHighscoreDisplay;
+let restartButton;
+let menuButton;
+let savedLevel;
+let targetLifetimes;
+let crosshairImg;
+let clickSound;
+let missSound;
 
-// Spelstatus — verandert tijdens het spel. //!91
-let score = 0;              // Huidige score
-let combo = 0;              // Aantal opeenvolgende rake klikken
-let timeLeft = 30;          // Resterende tijd in seconden
-let gameEndTime = 0;        // Exacte tijd waarop het spel eindigt
-let gameStarted = false;    // Of het spel actief bezig is
-let gameOver = false;       // Of het spel voorbij is
-let targetDiameter;         // Diameter van de targets in pixels
-let clickFeedback = null;   // Kleine cirkel die kort verschijnt na een klik
-let countdownValue = 0;     // Huidig getal in de aftelling
-let countdownStartTime = 0; // Tijdstip waarop de aftelling begon
-let countingDown = false;   // Of de aftelling bezig is
+// Spelstatus — verandert tijdens het spel.
+let score = 0;
+let combo = 0;
+let timeLeft = 30;
+let gameEndTime = 0;
+let gameStarted = false;
+let gameOver = false;
+let targetDiameter;
+let clickFeedback = null;
+let countdownValue = 0;
+let countdownStartTime = 0;
+let countingDown = false;
 
-// Maximum aantal targets tegelijk op het scherm //!2
+// Grootte van de cursor-PNG.
+const crosshairSize = 48;
+
+// Maximum aantal targets tegelijk op het scherm.
 const maxTargets = 5;
 
-// Lijst met alle actieve targets //!5
+// Lijst met alle actieve targets.
 const targets = [];
 
-// Hoe lang elk targettype zichtbaar blijft per level (in milliseconden)
+// Hoe lang elk targettype zichtbaar blijft per level in milliseconden.
 const targetLifetimesByLevel = {
   1: { normal: 5000, time: 3000, gold: 3000 },
   2: { normal: 4000, time: 2000, gold: 2000 },
@@ -44,14 +47,12 @@ const targetLifetimesByLevel = {
 };
 
 // Berekent de diameter van targets op basis van schermgrootte.
-// Level 4 krijgt kleinere targets (60% van normaal).
 function updateTargetDiameter() {
   const standardDiameter = windowWidth * 0.1;
   targetDiameter = savedLevel === "4" ? standardDiameter * 0.6 : standardDiameter;
 }
 
 // Kiest een willekeurige positie binnen het canvas en bepaalt het targettype.
-// Kans: ~6.5% gold (>=100), ~9.3% time (>=90), rest normal. //!7 - return
 function setRandomTargetPosition() {
   const radius = targetDiameter / 2;
   const minimumDistance = targetDiameter * 1.2;
@@ -61,10 +62,8 @@ function setRandomTargetPosition() {
   let positionIsFree = false;
   let attempts = 0;
 
-  // Blijf een positie proberen totdat deze niet te dicht bij een ander target ligt.
-  // De limiet voorkomt een oneindige loop als het canvas te klein is.
   while (!positionIsFree && attempts < 50) {
-    randomX = random(radius, width - radius); //!82 c.l(rx)
+    randomX = random(radius, width - radius);
     randomY = random(radius, height - radius);
 
     positionIsFree = targets.every((target) => {
@@ -84,23 +83,27 @@ function setRandomTargetPosition() {
     type = "time";
   }
 
-  // Geeft een object terug met positie, type en spawntijdstip
-  return { x: randomX, y: randomY, type, spawnedAt: millis() };
+  return {
+    x: randomX,
+    y: randomY,
+    type,
+    spawnedAt: millis(),
+  };
 }
 
-// Voegt één nieuw target toe aan de lijst
+// Voegt één nieuw target toe aan de lijst.
 function spawnTarget() {
   targets.push(setRandomTargetPosition());
 }
 
-// Vult de targetlijst aan tot het maximum
+// Vult de targetlijst aan tot het maximum.
 function fillTargetSlots() {
   while (targets.length < maxTargets) {
     spawnTarget();
   }
 }
 
-// Werkt de timer bij in de header (formaat MM:SS)
+// Werkt de timer bij in de header.
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -110,45 +113,41 @@ function updateTimerDisplay() {
   );
 }
 
-// Werkt de score bij in de header
+// Werkt de score bij in de header.
 function updateScoreDisplay() {
   scoreDisplay.html("Score: " + score);
 }
 
-// Toont de combo en de scorevermenigvuldiger. De eerste treffer telt als x1.
+// Toont de combo en scorevermenigvuldiger.
 function updateComboDisplay() {
   comboDisplay.html("Combo: x" + Math.max(1, combo));
 }
 
-// Berekent hoeveel hele seconden er nog over zijn op basis van de eindtijd.
+// Berekent hoeveel hele seconden er nog over zijn.
 function updateTimeLeft() {
   timeLeft = Math.max(0, Math.ceil((gameEndTime - millis()) / 1000));
 }
 
-// Voegt seconden toe aan de timer (groen target bonus) //!72 - parameter, argument, oproepen.
+// Voegt seconden toe aan de timer.
 function addTime(seconds) {
   gameEndTime += seconds * 1000;
   updateTimeLeft();
   updateTimerDisplay();
 }
 
-// Trekt seconden af van de timer. Roept finishGame aan als de tijd op is.
+// Trekt seconden af van de timer.
 function subtractTime(seconds) {
   gameEndTime = Math.max(millis(), gameEndTime - seconds * 1000);
   updateTimeLeft();
   updateTimerDisplay();
 
-  if (timeLeft === 0) { //!9
+  if (timeLeft === 0) {
     finishGame();
   }
 }
 
 // Stopt het spel en toont het game-over scherm.
-// .style("display", "flex") is nodig omdat .show() van p5 display: block zet,
-// waardoor align-items en justify-content niet werken.
-// Array.isArray() check voorkomt crash als qc_previous_scores geen array is.
 function finishGame() {
-  // Voorkomt dat finishGame meerdere keren wordt aangeroepen
   if (gameOver) {
     return;
   }
@@ -156,7 +155,6 @@ function finishGame() {
   gameOver = true;
   gameStarted = false;
 
-  // Sla nieuwe highscore op als de huidige score hoger is //!4
   let highscore = getItem("qc_highscore") ?? 0;
 
   if (score > highscore) {
@@ -164,15 +162,17 @@ function finishGame() {
     storeItem("qc_highscore", highscore);
   }
 
-  // Haal vorige scores op en controleer of het een echte array is
   const rawScores = getItem("qc_previous_scores");
   const scores = Array.isArray(rawScores) ? rawScores : [];
 
-  // Gebruik opgeslagen naam of "Anoniem" als er geen naam is
   const name = (getItem("qc_name") ?? "").trim() || "Anoniem";
 
-  // Voeg de nieuwe score vooraan toe en bewaar maximaal 10 scores
-  scores.unshift({ name, score, level: savedLevel });
+  scores.unshift({
+    name,
+    score,
+    level: savedLevel,
+  });
+
   storeItem("qc_previous_scores", scores.slice(0, 10));
 
   finalScoreDisplay.html("Score: " + score);
@@ -180,7 +180,7 @@ function finishGame() {
   gameOverDisplay.style("display", "flex");
 }
 
-// Wordt elke frame aangeroepen vanuit draw() om de timer bij te werken
+// Wordt elke frame aangeroepen om de timer bij te werken.
 function tickTimer() {
   if (!gameStarted || gameOver) {
     return;
@@ -189,7 +189,6 @@ function tickTimer() {
   const previousTimeLeft = timeLeft;
   updateTimeLeft();
 
-  // Werk de HTML alleen bij wanneer de zichtbare tijd verandert.
   if (timeLeft !== previousTimeLeft) {
     updateTimerDisplay();
   }
@@ -199,34 +198,35 @@ function tickTimer() {
   }
 }
 
-// Start het spel na de aftelling: reset score en herstart de timer
+// Start het spel na de aftelling.
 function startGame() {
   score = 0;
   combo = 0;
+
   updateScoreDisplay();
   updateComboDisplay();
 
-  // Reset spawntijdstip van bestaande targets zodat ze niet meteen verdwijnen
   for (const target of targets) {
     target.spawnedAt = millis();
   }
 
-  // Sla het exacte eindmoment van het spel op.
   gameEndTime = millis() + timeLeft * 1000;
   gameStarted = true;
 }
 
-// Toont de countdown gecentreerd via display: flex.
+// Start de aftelling.
 function startCountdown() {
   countdownValue = 5;
   countdownStartTime = millis();
   countingDown = true;
+
   countdownDisplay.html(countdownValue);
   countdownDisplay.style("display", "flex");
+
   updateTimerDisplay();
 }
 
-// Wordt elke frame aangeroepen vanuit draw() om de aftelling bij te werken
+// Werkt de aftelling bij.
 function tickCountdown() {
   if (!countingDown) {
     return;
@@ -235,24 +235,23 @@ function tickCountdown() {
   const elapsed = Math.floor((millis() - countdownStartTime) / 1000);
   const remaining = 5 - elapsed;
 
-  // Update het getal alleen als het veranderd is
   if (remaining > 0 && remaining !== countdownValue) {
     countdownValue = remaining;
     countdownDisplay.html(countdownValue);
   }
 
-  // Aftelling voorbij: toon "Start!" en start het spel
   if (remaining <= 0 && !gameStarted) {
     countingDown = false;
     countdownDisplay.html("Start!");
     startGame();
 
-    // Verberg de countdown na 500ms zodat "Start!" kort zichtbaar blijft
-    setTimeout(() => countdownDisplay.style("display", "none"), 500);
+    setTimeout(() => {
+      countdownDisplay.style("display", "none");
+    }, 500);
   }
 }
 
-// Reset alles en start een nieuw spel
+// Reset alles en start een nieuw spel.
 function restartGame() {
   gameOver = false;
   gameStarted = false;
@@ -261,26 +260,27 @@ function restartGame() {
   timeLeft = 30;
   gameEndTime = 0;
   clickFeedback = null;
-  targets.length = 0; // Leegt de array zonder een nieuwe aan te maken
+  targets.length = 0;
 
   updateScoreDisplay();
   updateComboDisplay();
   updateTimerDisplay();
+
   gameOverDisplay.style("display", "none");
+
   fillTargetSlots();
   startCountdown();
 }
 
-// Laadt afbeeldingen en geluiden voordat setup() wordt uitgevoerd
+// Laadt afbeeldingen en geluiden voordat setup() wordt uitgevoerd.
 function preload() {
   crosshairImg = loadImage("fotos/crosshair.png");
   clickSound = loadSound("geluiden/pew.wav");
   missSound = loadSound("geluiden/miss.mp3");
 }
 
-// Wordt eenmalig uitgevoerd door p5.js bij het opstarten //!1
-function setup() {  
-  // Koppel alle HTML-elementen aan variabelen
+// Wordt eenmalig uitgevoerd door p5.js bij het opstarten.
+function setup() {
   canvasArea = select(".game-canvas");
   levelDisplay = select(".level");
   scoreDisplay = select(".score");
@@ -293,19 +293,18 @@ function setup() {
   restartButton = select(".restart-button");
   menuButton = select(".menu-button");
 
-  // Haal het gekozen level op uit localStorage, standaard level 1
   savedLevel = getItem("qc_level") ?? "1";
   targetLifetimes = targetLifetimesByLevel[savedLevel] ?? targetLifetimesByLevel[1];
 
   levelDisplay.html("Level: " + savedLevel);
   updateComboDisplay();
 
-  // Maak het canvas aan en plaats het in de game-canvas container
   const canvas = createCanvas(canvasArea.width, canvasArea.height);
   canvas.parent(canvasArea);
 
-  // Voorkom dat rechtermuisklik een contextmenu opent in het canvas
-  canvas.elt.addEventListener("contextmenu", (event) => event.preventDefault());
+  canvas.elt.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
 
   restartButton.mouseClicked(restartGame);
 
@@ -315,34 +314,33 @@ function setup() {
     window.location.href = "Home.html";
   });
 
-  noCursor(); // Verberg de standaard muiscursor (vervangen door crosshairImg)
+  noCursor();
+
   updateTargetDiameter();
   fillTargetSlots();
   startCountdown();
 }
 
-// Tekent alle actieve targets en verwijdert verlopen targets
+// Tekent alle actieve targets en verwijdert verlopen targets.
 function drawTargets() {
-  // Van achter naar voren itereren zodat splice() de index niet verstoort //!6 //!10
   for (let index = targets.length - 1; index >= 0; index -= 1) {
     const target = targets[index];
     const lifetime = targetLifetimes[target.type];
 
-    // Verwijder target als de levensduur verstreken is en trek 2 seconden af
     if (gameStarted && millis() - target.spawnedAt >= lifetime) {
       targets.splice(index, 1);
+
       combo = 0;
       updateComboDisplay();
       subtractTime(2);
 
       if (gameOver) {
-        return; // Stop direct als het spel voorbij is
+        return;
       }
 
       continue;
     }
 
-    // Kleur per targettype: grijs = normaal, groen = tijd, goud = bonus
     let targetColor = "gray";
 
     if (target.type === "time") {
@@ -352,11 +350,11 @@ function drawTargets() {
     }
 
     fill(targetColor);
-    circle(target.x, target.y, targetDiameter); //!3
+    circle(target.x, target.y, targetDiameter);
   }
 }
 
-// Toont een kleine cirkel op de klikpositie (groen = raak, rood = mis)
+// Toont een kleine cirkel op de klikpositie.
 function drawClickFeedback() {
   if (clickFeedback && millis() - clickFeedback.time < 300) {
     fill(clickFeedback.color);
@@ -364,14 +362,21 @@ function drawClickFeedback() {
   }
 }
 
-// Tekent het dradenkruis op de muispositie
+// Tekent het dradenkruis precies gecentreerd op de muispositie.
 function drawCrosshair() {
-  image(crosshairImg, mouseX - 16, mouseY - 16, 48, 48);
+  const halfCrosshairSize = crosshairSize / 2;
+
+  image(
+    crosshairImg,
+    mouseX - halfCrosshairSize,
+    mouseY - halfCrosshairSize,
+    crosshairSize,
+    crosshairSize
+  );
 }
 
-// Hoofdlus van p5.js — wordt elke frame uitgevoerd
+// Hoofdlus van p5.js.
 function draw() {
-  // Teken niets als het spel voorbij is
   if (gameOver) {
     return;
   }
@@ -379,12 +384,11 @@ function draw() {
   tickCountdown();
   tickTimer();
 
-  background(24); // Donkere achtergrond (bijna zwart)
-  noStroke();     // Geen rand om de cirkels
+  background(24);
+  noStroke();
 
   drawTargets();
 
-  // Vul lege plekken alleen bij als het spel nog bezig is
   if (!gameOver) {
     fillTargetSlots();
   }
@@ -393,27 +397,25 @@ function draw() {
   drawCrosshair();
 }
 
-// Wordt aangeroepen door p5.js bij elke muisklik
+// Wordt aangeroepen door p5.js bij elke muisklik.
 function mousePressed() {
-  // Negeer klikken voor het spel gestart is
   if (!gameStarted) {
     return;
   }
 
   let hitTarget = false;
 
-  // Level 4: alleen linkse muisknop telt als geldige klik
+  // Level 4: alleen linkermuisknop telt.
   const isValidClick = savedLevel !== "4" || mouseButton === LEFT;
 
   if (isValidClick) {
-    // Van achter naar voren zodat het bovenste target als eerste geraakt wordt
     for (let index = targets.length - 1; index >= 0; index -= 1) {
       const target = targets[index];
       const distance = dist(mouseX, mouseY, target.x, target.y);
 
-      // Controleer of de klik binnen de cirkel valt
       if (distance < targetDiameter / 2) {
         clickSound.play();
+
         combo += 1;
         updateComboDisplay();
 
@@ -421,13 +423,12 @@ function mousePressed() {
           score += combo;
           updateScoreDisplay();
         } else if (target.type === "time") {
-          addTime(3); // Groen target: +3 seconden
+          addTime(3);
         } else if (target.type === "gold") {
-          score += 5 * combo; // Goud target: +5 punten, vermenigvuldigd met de combo
+          score += 5 * combo;
           updateScoreDisplay();
         }
 
-        // Groene feedback op de positie van het geraakt target
         clickFeedback = {
           x: target.x,
           y: target.y,
@@ -435,18 +436,19 @@ function mousePressed() {
           time: millis(),
         };
 
-        targets.splice(index, 1); // Verwijder het geraakt target
+        targets.splice(index, 1);
         fillTargetSlots();
+
         hitTarget = true;
-        break; // Stop na het eerste geraakt target
+        break;
       }
     }
   }
 
-  // Geen target geraakt: rode feedback en -2 seconden
   if (!hitTarget) {
     combo = 0;
     updateComboDisplay();
+
     missSound.play();
 
     clickFeedback = {
@@ -460,10 +462,12 @@ function mousePressed() {
   }
 }
 
-// Wordt aangeroepen door p5.js als het browservenster van grootte verandert
+// Wordt aangeroepen wanneer het browservenster verandert van grootte.
 function windowResized() {
   resizeCanvas(canvasArea.width, canvasArea.height);
-  updateTargetDiameter(); // Herbereken targetgrootte op basis van nieuwe breedte
-  targets.length = 0;     // Verwijder alle targets
-  fillTargetSlots();      // Spawn nieuwe targets op de juiste schaalgrootte
+
+  updateTargetDiameter();
+
+  targets.length = 0;
+  fillTargetSlots();
 }
